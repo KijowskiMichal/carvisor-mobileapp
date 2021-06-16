@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:transitionGroup="true">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:transitionGroup="true"
+    android:background="#EAECF0"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#474747"
+        android:fontFamily="@font/roboto"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="20dp"
+        android:text="Wybierz urządzenie"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
     <ListView
+        android:id="@+id/listView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/listView"/>
+        android:background="#EAECF0"
+        android:divider="#9EA7B1"
+        android:dividerHeight="2dp"
+        android:layout_marginTop="5dp"/>
 
 
-</RelativeLayout>
+</LinearLayout>
