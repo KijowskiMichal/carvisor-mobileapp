@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:transitionGroup="true"
     android:background="#EAECF0"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <TextView
         android:id="@+id/textView"

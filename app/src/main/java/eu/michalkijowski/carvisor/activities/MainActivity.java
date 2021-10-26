@@ -1,7 +1,6 @@
-package eu.michalkijowski.carvisor;
+package eu.michalkijowski.carvisor.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.Manifest;
 import android.content.Intent;
@@ -9,15 +8,18 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 
+import eu.michalkijowski.carvisor.R;
+import eu.michalkijowski.carvisor.data_models.AuthorizationDTO;
+import eu.michalkijowski.carvisor.services.AuthorizationService;
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -27,7 +29,7 @@ import okhttp3.Response;
 import okhttp3.internal.JavaNetCookieJar;
 
 public class MainActivity extends AppCompatActivity {
-    public static String BaseURL = "https://michal.vps.kronmar.net";
+    public static String BaseURL = "https://carvisor.pl";
     public static CookieManager cookieManager;
     public static OkHttpClient defaultHttpClient;
 
@@ -47,24 +49,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        try {
-            EditText login = (EditText) findViewById(R.id.editTextTextPersonName);
-            EditText password = (EditText) findViewById(R.id.editTextTextPersonName2);
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("login", login.getText().toString());
-            jsonObject.put("password", password.getText().toString());
-            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), jsonObject.toString());
-            Request request = new Request.Builder().url(MainActivity.BaseURL+"/API/authorization/authorize").post(body).build();
-            Call call = MainActivity.defaultHttpClient.newCall(request);
-            Response response = call.execute();
-            if (response.code()==200)
-            {
-                Intent intent = new Intent(getApplicationContext(), ConnectWithDeviceToAdd.class);
-                startActivity(intent);
-            }
-            else throw new SecurityException();
-        } catch (IOException | SecurityException | JSONException e) {
-            e.printStackTrace();
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(intent);
+        EditText login = (EditText) findViewById(R.id.editTextTextPersonName);
+        EditText password = (EditText) findViewById(R.id.editTextTextPersonName2);
+        if (AuthorizationService.authorizeUser(new AuthorizationDTO(login.getText().toString(), password.getText().toString())))
+        {
+            //Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            //startActivity(intent);
+        }
+        else {
+            Toast.makeText(getApplicationContext(), R.string.wrong_password, Toast.LENGTH_LONG).show();
         }
     }
 }

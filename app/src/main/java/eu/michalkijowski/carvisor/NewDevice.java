@@ -2,7 +2,6 @@ package eu.michalkijowski.carvisor;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NavUtils;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,14 +9,10 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.ParcelUuid;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -25,13 +20,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Set;
 import java.util.UUID;
 
+import eu.michalkijowski.carvisor.activities.MainActivity;
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.Request;

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_my_fleet"
+            android:icon="@drawable/ic_my_fleet"
+            android:title="@string/my_fleet" />
+        <item
+            android:id="@+id/nav_my_devices"
+            android:icon="@drawable/ic_my_devices"
+            android:title="@string/my_devices" />
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_map"
+            android:title="@string/map" />
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_notifications"
+            android:title="@string/notification" />
+        <item
+            android:id="@+id/nav_errors"
+            android:icon="@drawable/ic_warning"
+            android:title="@string/errors" />
+        <item
+            android:id="@+id/nav_ecopoints"
+            android:icon="@drawable/ic_ecopoints"
+            android:title="@string/ecopoints" />
+        <item
+            android:id="@+id/nav_safetypoints"
+            android:icon="@drawable/ic_safety"
+            android:title="@string/safetypoints" />
+        <item
+            android:id="@+id/nav_raports"
+            android:icon="@drawable/ic_raports"
+            android:title="@string/raports" />
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_calendar"
+            android:title="@string/calendar" />
+    </group>
+</menu>
