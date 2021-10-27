@@ -10,32 +10,30 @@
         android:name="eu.michalkijowski.carvisor.fragments.myFleet.list.MyFleetFragment"
         android:label="@string/my_fleet"
         tools:layout="@layout/fragment_my_fleet_list" >
-        <action
-            android:id="@+id/action_nav_my_fleet_to_nav_my_devices"
-            app:destination="@id/nav_my_devices" />
-        <action
-            android:id="@+id/action_nav_my_fleet_to_nav_map"
-            app:destination="@id/nav_map" />
-        <action
-            android:id="@+id/action_nav_my_fleet_to_nav_notification"
-            app:destination="@id/nav_notification" />
     </fragment>
+
+            <fragment
+                android:id="@+id/nav_my_fleet_add"
+                android:name="eu.michalkijowski.carvisor.fragments.myFleet.add.MyFleetAddFragment"
+                android:label="@string/my_fleet_add"
+                tools:layout="@layout/fragment_my_fleet_add" >
+            </fragment>
 
     <fragment
         android:id="@+id/nav_my_devices"
         android:name="eu.michalkijowski.carvisor.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/my_devices"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_map"
         android:name="eu.michalkijowski.carvisor.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/map"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_notification"
         android:name="eu.michalkijowski.carvisor.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/notification"
         tools:layout="@layout/fragment_gallery" />
 </navigation>
