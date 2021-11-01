@@ -49,14 +49,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
         EditText login = (EditText) findViewById(R.id.editTextTextPersonName);
         EditText password = (EditText) findViewById(R.id.editTextTextPersonName2);
         if (AuthorizationService.authorizeUser(new AuthorizationDTO(login.getText().toString(), password.getText().toString())))
         {
-            //Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(intent);
         }
         else {
             Toast.makeText(getApplicationContext(), R.string.wrong_password, Toast.LENGTH_LONG).show();

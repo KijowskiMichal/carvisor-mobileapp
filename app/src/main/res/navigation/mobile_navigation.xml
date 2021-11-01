@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_my_fleet"
-        android:name="eu.michalkijowski.carvisor.fragments.myFleet.list.MyFleetFragment"
+        android:name="eu.michalkijowski.carvisor.fragments.myFleet.list.MyFleetListFragment"
         android:label="@string/my_fleet"
         tools:layout="@layout/fragment_my_fleet_list" >
     </fragment>

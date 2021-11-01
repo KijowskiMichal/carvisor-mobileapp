@@ -19,5 +19,4 @@
     <style name="LoginButton" parent="ThemeOverlay.AppCompat">
         <item name="colorPrimary">#EF476F</item>
     </style>
-
 </resources>
