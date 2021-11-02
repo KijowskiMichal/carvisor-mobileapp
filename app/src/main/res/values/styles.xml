@@ -19,4 +19,8 @@
     <style name="LoginButton" parent="ThemeOverlay.AppCompat">
         <item name="colorPrimary">#EF476F</item>
     </style>
+
+    <style name="AcceptButton" parent="ThemeOverlay.AppCompat">
+        <item name="colorPrimary">#06D6A0</item>
+    </style>
 </resources>
