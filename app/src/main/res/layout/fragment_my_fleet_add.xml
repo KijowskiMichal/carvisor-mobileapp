@@ -26,7 +26,6 @@
                 android:layout_height="300dp"
                 android:clickable="true"
                 android:layoutDirection="inherit"
-                android:onClick="selectImage"
                 android:src="@drawable/photo_add" />
         </LinearLayout>
 

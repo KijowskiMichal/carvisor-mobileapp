@@ -2,12 +2,21 @@ package eu.michalkijowski.carvisor.fragments.myFleet.add;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,7 +26,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -30,6 +42,7 @@ import java.util.List;
 
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.UserAddDTO;
+import eu.michalkijowski.carvisor.data_models.UserDTO;
 import eu.michalkijowski.carvisor.fragments.myFleet.list.MyFleetListFragment;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.UsersService;
@@ -37,6 +50,15 @@ import eu.michalkijowski.carvisor.services.UsersService;
 public class MyFleetAddFragment extends Fragment {
     ImageView imageView;
     String image;
+    private ProgressDialog mProgressDialog;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.home, menu);
+            for (int i = 0; i < menu.size(); i++)
+                menu.getItem(i).setVisible(false);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
 
     public void selectImage(View view) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -46,7 +68,7 @@ public class MyFleetAddFragment extends Fragment {
         startActivityForResult(photoPickerIntent, 1003);
     }
 
-    public boolean register(View view) {
+    public UserAddDTO register(View view) {
         try {
             String name = ((EditText)getView().findViewById(R.id.editTextTextPersonName5)).getText().toString().split(" ")[0];
             String surname = ((EditText)getView().findViewById(R.id.editTextTextPersonName5)).getText().toString().split(" ")[1];
@@ -63,15 +85,15 @@ public class MyFleetAddFragment extends Fragment {
             System.out.println(password2);
             System.out.println(image);
 
-            if (!password1.equals(password2)) return false;
-            if (name.equals("")) return false;
-            if (surname.equals("")) return false;
-            if (phone.equals("")) return false;
-            if (nick.equals("")) return false;
-            if (password1.equals("")) return false;
+            if (!password1.equals(password2)) return null;
+            if (name.equals("")) return null;
+            if (surname.equals("")) return null;
+            if (phone.equals("")) return null;
+            if (nick.equals("")) return null;
+            if (password1.equals("")) return null;
 
-            if (image==null) return false;
-            if (image.equals("")) return false;
+            if (image==null) return null;
+            if (image.equals("")) return null;
 
             UserAddDTO userAddDTO = new UserAddDTO();
             userAddDTO.setName(name);
@@ -81,12 +103,10 @@ public class MyFleetAddFragment extends Fragment {
             userAddDTO.setPassword(password1);
             userAddDTO.setImage(image);
 
-            UsersService.addUser(userAddDTO);
-
-            return true;
+            return userAddDTO;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
@@ -115,6 +135,7 @@ public class MyFleetAddFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View root = inflater.inflate(R.layout.fragment_my_fleet_add, container, false);
         /********************************
          * Image selector
@@ -133,23 +154,57 @@ public class MyFleetAddFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (register(view)) {
-                    Toast.makeText(getContext(), "Poprawnie dodano użytkownika.", Toast.LENGTH_LONG).show();
-                    Bundle bundle = new Bundle();
-                    NavHostFragment.findNavController(MyFleetAddFragment.this)
-                            .navigate(R.id.action_nav_my_fleet_add_to_nav_my_fleet,bundle);
+                UserAddDTO userAddDTO = register(view);
+                if (userAddDTO!=null) {
+                    new PostNewUser().execute(userAddDTO);
                 }
                 else {
                     Toast.makeText(getContext(), "Nie wszystkie pola wypełniono poprawnie.", Toast.LENGTH_LONG).show();
                 }
             }
         });
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Bundle bundle = new Bundle();
+                NavHostFragment.findNavController(MyFleetAddFragment.this)
+                        .navigate(R.id.action_nav_my_fleet_add_to_nav_my_fleet,bundle);
+            }
+        });
         return root;
     }
 
-    @Override
+        @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         imageView.setImageResource(R.drawable.photo_add);
+    }
+
+    private class PostNewUser extends AsyncTask<UserAddDTO, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(UserAddDTO... userAddDTO) {
+            return UsersService.addUser(userAddDTO[0]);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.loading), true, false);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean bool) {
+            super.onPostExecute(bool);
+            mProgressDialog.dismiss();
+            if (bool) {
+                Toast.makeText(getContext(), "Poprawnie dodano użytkownika.", Toast.LENGTH_LONG).show();
+                Bundle bundle = new Bundle();
+                NavHostFragment.findNavController(MyFleetAddFragment.this)
+                        .navigate(R.id.action_nav_my_fleet_add_to_nav_my_fleet,bundle);
+            }
+            else {
+                Toast.makeText(getContext(), "Taki użytkownik już istnieje.", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

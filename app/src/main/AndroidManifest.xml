@@ -27,11 +27,17 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".activities.HomeActivity"
-            android:label="@string/title_activity_home"></activity>
-        <activity android:name=".ConnectWithDeviceToAdd" />
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".NewDevice" />
-        <activity android:name=".activities.MainActivity">
+            android:name=".ConnectWithDeviceToAdd"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewDevice"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
