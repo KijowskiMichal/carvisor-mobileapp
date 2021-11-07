@@ -21,6 +21,15 @@
         android:background="@drawable/card"
         android:descendantFocusability="afterDescendants">
 
+        <TextView
+            android:id="@+id/userId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <ImageView
             android:id="@+id/userImage"
             android:layout_width="40dp"

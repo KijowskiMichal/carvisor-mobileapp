@@ -112,4 +112,9 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="loading">Ładowanie...</string>
+    <string name="password_edit_placeholder">Pozostaw to pole puste, jeśli nie chcesz zmienić hasła.</string>
+    <string name="my_fleet_edit">Edycja użytkownika</string>
+    <string name="remove_user_ok">Usuń użytkownika</string>
+    <string name="remove_user_cancel">Anuluj</string>
+    <string name="deleting_user">Usuwanie użytkownika</string>
 </resources>

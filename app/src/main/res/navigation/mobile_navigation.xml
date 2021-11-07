@@ -11,27 +11,59 @@
         android:label="@string/my_fleet"
         tools:layout="@layout/fragment_my_fleet_list" >
         <action
+            android:id="@+id/action_nav_my_fleet_to_nav_my_fleet"
+            app:destination="@id/nav_my_fleet"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
             android:id="@+id/action_nav_my_fleet_to_nav_my_fleet_add"
             app:destination="@id/nav_my_fleet_add"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_my_fleet_to_nav_my_fleet_edit"
+            app:destination="@id/nav_my_fleet_edit"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
-            <fragment
-                android:id="@+id/nav_my_fleet_add"
-                android:name="eu.michalkijowski.carvisor.fragments.myFleet.add.MyFleetAddFragment"
-                android:label="@string/my_fleet_add"
-                tools:layout="@layout/fragment_my_fleet_add" >
-                <action
-                    android:id="@+id/action_nav_my_fleet_add_to_nav_my_fleet"
-                    app:destination="@id/nav_my_fleet"
-                    app:enterAnim="@anim/nav_default_enter_anim"
-                    app:exitAnim="@anim/nav_default_exit_anim"
-                    app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                    app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-            </fragment>
+                <fragment
+                    android:id="@+id/nav_my_fleet_add"
+                    android:name="eu.michalkijowski.carvisor.fragments.myFleet.add.MyFleetAddFragment"
+                    android:label="@string/my_fleet_add"
+                    tools:layout="@layout/fragment_my_fleet_add" >
+                    <action
+                        android:id="@+id/action_nav_my_fleet_add_to_nav_my_fleet"
+                        app:destination="@id/nav_my_fleet"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+                <fragment
+                    android:id="@+id/nav_my_fleet_edit"
+                    android:name="eu.michalkijowski.carvisor.fragments.myFleet.edit.MyFleetEditFragment"
+                    android:label="@string/my_fleet_edit"
+                    tools:layout="@layout/fragment_my_fleet_edit" >
+                    <argument
+                        android:name="id"
+                        app:argType="integer"
+                        android:defaultValue="0" />
+                    <action
+                        android:id="@+id/action_nav_my_fleet_edit_to_nav_my_fleet"
+                        app:destination="@id/nav_my_fleet"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
 
     <fragment
         android:id="@+id/nav_my_devices"

@@ -10,21 +10,27 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Base64;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 
@@ -84,8 +90,7 @@ public class MyFleetListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                //bundle.putInt("id", 10);//sending data to the second fragment
-                NavHostFragment.findNavController(MyFleetListFragment.this)//your fragment
+                NavHostFragment.findNavController(MyFleetListFragment.this)
                         .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet_add,bundle);
             }
         });
@@ -98,6 +103,8 @@ public class MyFleetListFragment extends Fragment {
         new DownloadDataForList().execute();
     }
 
+
+
     private class DownloadDataForList extends AsyncTask<Void, Void, SimpleAdapter> {
         @Override
         protected SimpleAdapter doInBackground(Void... voids) {
@@ -108,6 +115,7 @@ public class MyFleetListFragment extends Fragment {
             List<HashMap<String, String>> list = new ArrayList<>();
             for (UserDTO userDTO : usersDTO) {
                 HashMap item = new HashMap<String, String>();
+                item.put("userId", String.valueOf(userDTO.getId()));
                 item.put("name", userDTO.getName() + " " + userDTO.getSurname());
                 item.put("licensePlate", userDTO.getLicensePlate().equals("------") ? "---" : userDTO.getLicensePlate());
                 item.put("active", userDTO.getStatus());
@@ -121,8 +129,8 @@ public class MyFleetListFragment extends Fragment {
             }
             SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), list,
                     R.layout.fragment_my_fleet_list_row,
-                    new String[]{"name", "licensePlate", "active", "distance", "time", "userImage"},
-                    new int[]{R.id.name, R.id.licensePlate, R.id.active, R.id.distance, R.id.time, R.id.userImage});
+                    new String[]{"userId", "name", "licensePlate", "active", "distance", "time", "userImage"},
+                    new int[]{R.id.userId, R.id.name, R.id.licensePlate, R.id.active, R.id.distance, R.id.time, R.id.userImage});
             simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
                 public boolean setViewValue(View view, Object data,
                                             String textRepresentation) {
@@ -147,6 +155,21 @@ public class MyFleetListFragment extends Fragment {
         protected void onPostExecute(SimpleAdapter simpleAdapter) {
             super.onPostExecute(simpleAdapter);
             listView.setAdapter(simpleAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    TextView idTextView = (TextView) view.findViewById(R.id.userId);
+                    int identifier = Integer.valueOf(idTextView.getText().toString().trim());
+                    TextView nameTextView = (TextView) view.findViewById(R.id.name);
+                    String name = nameTextView.getText().toString().trim();
+                    RowActionDialog rowActionDialog = new RowActionDialog();
+                    Bundle bundle = new Bundle();
+                    rowActionDialog.show(getFragmentManager(), String.valueOf(identifier), name, MyFleetListFragment.this, bundle, getContext());
+                }
+
+            });
             mProgressDialog.dismiss();
         }
     }
