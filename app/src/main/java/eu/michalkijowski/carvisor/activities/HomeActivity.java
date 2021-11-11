@@ -1,5 +1,6 @@
 package eu.michalkijowski.carvisor.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import eu.michalkijowski.carvisor.R;
+import eu.michalkijowski.carvisor.services.AuthorizationService;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -53,5 +55,11 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void logout(View view) {
+        AuthorizationService.logout();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }

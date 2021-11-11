@@ -14,6 +14,7 @@ import eu.michalkijowski.carvisor.ConnectWithDeviceToAdd;
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.activities.MainActivity;
 import eu.michalkijowski.carvisor.data_models.AuthorizationDTO;
+import eu.michalkijowski.carvisor.data_models.UserDataDTO;
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -36,5 +37,18 @@ public class AuthorizationService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static void logout() {
+        try {
+            Request request = new Request.Builder()
+                    .url(MainActivity.BaseURL + "/API/authorization/logout/")
+                    .build();
+
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            call.execute();
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
     }
 }

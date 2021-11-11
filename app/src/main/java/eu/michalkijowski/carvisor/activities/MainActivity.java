@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     public static String BaseURL = "https://carvisor.pl";
     public static CookieManager cookieManager;
     public static OkHttpClient defaultHttpClient;
+    public static boolean firstUse = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        requestPermissions(new String[] { Manifest.permission.WRITE_SETTINGS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.INTERNET }, 1);
+        if (MainActivity.firstUse) {
+            requestPermissions(new String[] { Manifest.permission.WRITE_SETTINGS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.INTERNET }, 1);
+            MainActivity.firstUse = false;
+        }
     }
 
     public void login(View view) {
