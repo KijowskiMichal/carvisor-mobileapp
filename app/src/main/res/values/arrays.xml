@@ -5,4 +5,27 @@
         <item>Usuń użytkownika</item>
         <item>Pokaż na mapie</item>
     </string-array>
+    <string-array name="history_time">
+        <item>10 Dni</item>
+        <item>15 Dni</item>
+        <item>Miesiąc</item>
+        <item>3 miesiące</item>
+        <item>6 miesięcy</item>
+        <item>Bez ograniczeń</item>
+    </string-array>
+    <string-array name="location_interval">
+        <item>5 sekund</item>
+        <item>10 sekund</item>
+        <item>15 sekund</item>
+        <item>Automatycznie</item>
+    </string-array>
+    <string-array name="send_interval">
+        <item>15 sekund</item>
+        <item>30 sekund</item>
+        <item>1 minuta</item>
+        <item>3 minuty</item>
+        <item>5 minut</item>
+        <item>Automatycznie</item>
+    </string-array>
+
 </resources>

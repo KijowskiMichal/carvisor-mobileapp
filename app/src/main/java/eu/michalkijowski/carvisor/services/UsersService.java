@@ -94,6 +94,18 @@ public class UsersService {
         }
     }
 
+    public static void editUserPassword(UserPasswordDTO userPasswordDTO) {
+        Gson gson = new Gson();
+        try {
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(userPasswordDTO));
+            Request request = new Request.Builder().url(MainActivity.BaseURL+"/API/users/changePassword/").post(body).build();
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            call.execute();
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void deleteUser(Integer id) {
         try {
             Request request = new Request.Builder().delete()
