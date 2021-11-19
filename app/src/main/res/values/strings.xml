@@ -117,5 +117,7 @@
     <string name="remove_user_ok">Usuń użytkownika</string>
     <string name="remove_user_cancel">Anuluj</string>
     <string name="deleting_user">Usuwanie użytkownika</string>
+    <string name="my_devices_add">Dodawanie pojazdu</string>
     <string name="settings">Ustawienia</string>
+    <string name="connecting_to_device">Połączenie z urządzeniem</string>
 </resources>

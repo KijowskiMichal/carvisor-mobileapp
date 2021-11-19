@@ -66,6 +66,55 @@
                 </fragment>
 
     <fragment
+        android:id="@+id/nav_devices"
+        android:name="eu.michalkijowski.carvisor.fragments.devices.list.DevicesListFragment"
+        android:label="@string/my_devices"
+        tools:layout="@layout/fragment_devices_list" >
+        <action
+            android:id="@+id/action_nav_devices_to_nav_devices_add"
+            app:destination="@id/nav_devices_add"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+                <fragment
+                    android:id="@+id/nav_devices_add"
+                    android:name="eu.michalkijowski.carvisor.fragments.devices.add.DevicesAddBluetoothListFragment"
+                    android:label="@string/my_devices_add"
+                    tools:layout="@layout/fragment_devices_add_bluetooth_list" >
+                    <action
+                        android:id="@+id/action_nav_devices_add_to_nav_devices"
+                        app:destination="@id/nav_devices"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                    <action
+                        android:id="@+id/action_nav_devices_add_to_nav_devices_add_form"
+                        app:destination="@id/nav_devices_add_form"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+                                <fragment
+                                    android:id="@+id/nav_devices_add_form"
+                                    android:name="eu.michalkijowski.carvisor.fragments.devices.add.DevicesAddFragment"
+                                    android:label="@string/my_devices_add"
+                                    tools:layout="@layout/fragment_my_devices_add" >
+                                    <action
+                                        android:id="@+id/action_nav_devices_add_form_to_nav_devices_add"
+                                        app:destination="@id/nav_devices_add"
+                                        app:enterAnim="@anim/nav_default_enter_anim"
+                                        app:exitAnim="@anim/nav_default_exit_anim"
+                                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                                </fragment>
+
+    <fragment
         android:id="@+id/nav_settings"
         android:name="eu.michalkijowski.carvisor.fragments.settings.SettingsFragment"
         android:label="@string/settings"
@@ -78,22 +127,4 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
-
-    <fragment
-        android:id="@+id/nav_my_devices"
-        android:name="eu.michalkijowski.carvisor.ui.home.HomeFragment"
-        android:label="@string/my_devices"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_map"
-        android:name="eu.michalkijowski.carvisor.ui.gallery.GalleryFragment"
-        android:label="@string/map"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_notification"
-        android:name="eu.michalkijowski.carvisor.ui.slideshow.SlideshowFragment"
-        android:label="@string/notification"
-        tools:layout="@layout/fragment_gallery" />
 </navigation>

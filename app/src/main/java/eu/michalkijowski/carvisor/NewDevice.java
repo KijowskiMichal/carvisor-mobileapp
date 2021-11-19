@@ -99,7 +99,7 @@ public class NewDevice extends AppCompatActivity {
             Call call = MainActivity.defaultHttpClient.newCall(request);
             Response response = call.execute();
             JSONObject jsonToCar = new JSONObject();
-            jsonToCar.put("adress", MainActivity.BaseURL);
+            jsonToCar.put("address", MainActivity.BaseURL);
             jsonToCar.put("licensePlate", licensePlate.getText().toString());
             jsonToCar.put("password", password);
             if (response.code() == 201) {
