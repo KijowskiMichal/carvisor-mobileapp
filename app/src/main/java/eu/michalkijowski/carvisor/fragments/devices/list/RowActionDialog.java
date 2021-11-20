@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.NavHostFragment;
 
 import eu.michalkijowski.carvisor.R;
-import eu.michalkijowski.carvisor.fragments.myFleet.list.RowDeleteDialog;
 
 public class RowActionDialog extends DialogFragment {
 
@@ -39,12 +38,12 @@ public class RowActionDialog extends DialogFragment {
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(name)
-                .setItems(R.array.my_fleet_list_row_action, new DialogInterface.OnClickListener() {
+                .setItems(R.array.my_devices_list_row_action, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (which==0) {
                             bundle.putInt("id", Integer.valueOf(tag));
                             NavHostFragment.findNavController(fragment)
-                                    .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet_edit,bundle);
+                                    .navigate(R.id.action_nav_devices_to_nav_devices_edit,bundle);
                         }
                         else if (which==1) {
                             new RowDeleteDialog().show(manager, tag, name, fragment, context);

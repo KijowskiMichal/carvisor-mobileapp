@@ -1,22 +1,12 @@
-package eu.michalkijowski.carvisor.fragments.myFleet.list;
+package eu.michalkijowski.carvisor.fragments.devices.list;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Base64;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,13 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import eu.michalkijowski.carvisor.R;
-import eu.michalkijowski.carvisor.data_models.UserDTO;
-import eu.michalkijowski.carvisor.services.ImageService;
+import eu.michalkijowski.carvisor.services.DevicesService;
 import eu.michalkijowski.carvisor.services.UsersService;
 
 public class RowDeleteDialog extends DialogFragment {
@@ -56,11 +41,11 @@ public class RowDeleteDialog extends DialogFragment {
 
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.ic_add)
-                .setTitle("Czy chcesz usunąć użytkownika "+name+"?")
-                .setPositiveButton(R.string.remove_user_ok,
+                .setTitle("Czy chcesz usunąć pojazd "+name+"?")
+                .setPositiveButton(R.string.remove_device_ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                new DeleteUser().execute();
+                                new DeleteDevice().execute();
                             }
                         }
                 )
@@ -74,27 +59,27 @@ public class RowDeleteDialog extends DialogFragment {
                 .create();
     }
 
-    private class DeleteUser extends AsyncTask<Void, Void, Void> {
+    private class DeleteDevice extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-            UsersService.deleteUser(Integer.valueOf(tag));
+            DevicesService.deleteDevice(Integer.valueOf(tag));
             return null;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.deleting_user), true, false);
+            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.deleting_device), true, false);
         }
 
         @Override
         protected void onPostExecute(Void params) {
             super.onPostExecute(params);
             mProgressDialog.dismiss();
-            Toast.makeText(context, "Poprawnie usunięto użytkownika.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Poprawnie usunięto pojazd.", Toast.LENGTH_LONG).show();
             Bundle bundle = new Bundle();
             NavHostFragment.findNavController(fragment)
-                    .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet,bundle);
+                    .navigate(R.id.action_nav_devices_to_nav_devices,bundle);
         }
     }
 

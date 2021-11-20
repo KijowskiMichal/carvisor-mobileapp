@@ -35,7 +35,6 @@ import java.util.List;
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.DeviceDTO;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
-import eu.michalkijowski.carvisor.fragments.myFleet.list.RowActionDialog;
 import eu.michalkijowski.carvisor.services.DevicesService;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.UsersService;

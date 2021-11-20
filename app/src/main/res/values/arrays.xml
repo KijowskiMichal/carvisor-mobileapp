@@ -5,6 +5,11 @@
         <item>Usuń użytkownika</item>
         <item>Pokaż na mapie</item>
     </string-array>
+    <string-array name="my_devices_list_row_action">
+        <item>Edytuj pojazd</item>
+        <item>Usuń pojazd</item>
+        <item>Pokaż na mapie</item>
+    </string-array>
     <string-array name="history_time">
         <item>10 Dni</item>
         <item>15 Dni</item>

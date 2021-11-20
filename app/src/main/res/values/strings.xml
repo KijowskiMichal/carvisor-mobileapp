@@ -118,6 +118,10 @@
     <string name="remove_user_cancel">Anuluj</string>
     <string name="deleting_user">Usuwanie użytkownika</string>
     <string name="my_devices_add">Dodawanie pojazdu</string>
+    <string name="my_devices_edit">Edycja pojazdu</string>
     <string name="settings">Ustawienia</string>
     <string name="connecting_to_device">Połączenie z urządzeniem</string>
+    <string name="deleting_device">Usuwanie pojazdu</string>
+    <string name="remove_device_ok">Usuń pojazd</string>
+    <string name="saving_image">Zapisywanie zdjęcia</string>
 </resources>
