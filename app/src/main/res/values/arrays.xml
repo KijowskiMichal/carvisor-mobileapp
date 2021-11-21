@@ -32,5 +32,9 @@
         <item>5 minut</item>
         <item>Automatycznie</item>
     </string-array>
-
+    <string-array name="ecopoints" >
+        <item>Dzisiaj</item>
+        <item>Ostatni tydzień</item>
+        <item>Ostatni miesiąc</item>
+    </string-array>
 </resources>

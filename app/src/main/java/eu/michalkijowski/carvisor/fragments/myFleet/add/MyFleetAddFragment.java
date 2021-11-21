@@ -77,14 +77,6 @@ public class MyFleetAddFragment extends Fragment {
             String password1 = ((EditText)getView().findViewById(R.id.editTextTextPersonName12)).getText().toString();
             String password2 = ((EditText)getView().findViewById(R.id.editTextTextPersonName13)).getText().toString();
 
-            System.out.println(name);
-            System.out.println(surname);
-            System.out.println(phone);
-            System.out.println(nick);
-            System.out.println(password1);
-            System.out.println(password2);
-            System.out.println(image);
-
             if (!password1.equals(password2)) return null;
             if (name.equals("")) return null;
             if (surname.equals("")) return null;
