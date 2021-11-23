@@ -1,4 +1,4 @@
-package eu.michalkijowski.carvisor.fragments.ecopoints;
+package eu.michalkijowski.carvisor.fragments.safetypoints;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -31,9 +31,12 @@ import java.util.List;
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.EcopointDTO;
 import eu.michalkijowski.carvisor.data_models.EcopointsDTO;
+import eu.michalkijowski.carvisor.data_models.SafetiesDTO;
+import eu.michalkijowski.carvisor.data_models.SafetyDTO;
 import eu.michalkijowski.carvisor.services.EcopointsService;
+import eu.michalkijowski.carvisor.services.SafetyService;
 
-public class EcopointsListFragment extends Fragment {
+public class SafetyListFragment extends Fragment {
 
     String regex = "";
     private ProgressDialog mProgressDialog;
@@ -68,14 +71,14 @@ public class EcopointsListFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View root = inflater.inflate(R.layout.fragment_ecopoints_list, container, false);
+        View root = inflater.inflate(R.layout.fragment_safety_list, container, false);
         listView = (ListView) root.findViewById(R.id.myFleetListView);
         requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(EcopointsListFragment.this)
-                        .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet,bundle);
+                NavHostFragment.findNavController(SafetyListFragment.this)
+                        .navigate(R.id.action_nav_safetypoints_to_nav_my_fleet,bundle);
             }
         });
         return root;
@@ -95,23 +98,20 @@ public class EcopointsListFragment extends Fragment {
             /********************************
              * ListView
              *******************************/
-            EcopointsDTO ecopointsDTO = EcopointsService.getEcopointsList(regex);
+            SafetiesDTO safetiesDTO = SafetyService.getSafetyList(regex);
             List<HashMap<String, String>> list = new ArrayList<>();
-            for (EcopointDTO ecopointDTO : ecopointsDTO.getListOfEcos()) {
+            for (SafetyDTO safetyDTO : safetiesDTO.getListOfEcos()) {
                 HashMap item = new HashMap<String, String>();
-                item.put("userId", String.valueOf(ecopointDTO.getId()));
-                item.put("name", ecopointDTO.getName() + " " + ecopointDTO.getSurname());
-                item.put("rate", String.format("%.1f", ecopointDTO.getRate()));
-                item.put("tracks", ecopointDTO.getTracks());
-                item.put("revolutions", String.format("%.0f", ecopointDTO.getRevolutions()) + " rpm");
-                item.put("speed", String.format("%.1f", ecopointDTO.getSpeed()) + " km/h");
-                item.put("combustion", String.format("%.2f", ecopointDTO.getCombustion()) + " l/100km");
+                item.put("userId", String.valueOf(safetyDTO.getId()));
+                item.put("name", safetyDTO.getName() + " " + safetyDTO.getSurname());
+                item.put("rate", String.format("%.1f", safetyDTO.getRate()));
+                item.put("tracks", safetyDTO.getTracks());
                 list.add(item);
             }
             SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), list,
-                    R.layout.fragment_ecopoints_list_row,
-                    new String[]{"userId", "name", "rate", "tracks", "revolutions", "speed", "combustion"},
-                    new int[]{R.id.userId, R.id.name, R.id.rate, R.id.tracks, R.id.revolutions, R.id.speed, R.id.combustion});
+                    R.layout.fragment_safety_list_row,
+                    new String[]{"userId", "name", "rate", "tracks"},
+                    new int[]{R.id.userId, R.id.name, R.id.rate, R.id.tracks});
             simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
                 public boolean setViewValue(View view, Object data,
                                             String textRepresentation) {
