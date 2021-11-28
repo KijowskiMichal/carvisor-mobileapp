@@ -37,4 +37,9 @@
         <item>Ostatni tydzień</item>
         <item>Ostatni miesiąc</item>
     </string-array>
+    <string-array name="raports_type" >
+        <item>Raport tras</item>
+        <item>Raport ekojazdy</item>
+        <item>Raport bezpieczeństwa</item>
+    </string-array>
 </resources>

@@ -134,9 +134,14 @@ public class MyFleetListFragment extends Fragment {
                 item.put("distance", userDTO.getDistance() + " km");
                 item.put("time", (!userDTO.getStartTime().equals("-1") ? userDTO.getStartTime() + " - " + userDTO.getFinishTime() : (!userDTO.getFinishTime().equals("-1") ? userDTO.getFinishTime() : "---")));
                 //image
-                byte[] bytes = Base64.decode(userDTO.getImage().replace("data:image/png;base64,", ""), Base64.DEFAULT);
-                Bitmap bitmap = ImageService.getCircleImage(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-                item.put("userImage", new BitmapDrawable(getResources(), bitmap));
+                try {
+                    byte[] bytes = Base64.decode(userDTO.getImage().replace("data:image/png;base64,", ""), Base64.DEFAULT);
+                    Bitmap bitmap = ImageService.getCircleImage(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    item.put("userImage", new BitmapDrawable(getResources(), bitmap));
+                }
+                catch (IllegalArgumentException | NullPointerException e) {
+                    e.printStackTrace();
+                }
                 list.add(item);
             }
             SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), list,

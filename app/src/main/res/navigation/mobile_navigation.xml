@@ -210,5 +210,75 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_report_to_nav_report_add"
+            app:destination="@id/nav_reports_add"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
+                <fragment
+                    android:id="@+id/nav_reports_add"
+                    android:name="eu.michalkijowski.carvisor.fragments.reports.add.ReportsAddFragmentPageZero"
+                    android:label="@string/report_create"
+                    tools:layout="@layout/fragment_reports_add_page_zero" >
+                    <action
+                        android:id="@+id/action_nav_report_add_page_zero_to_nav_report"
+                        app:destination="@id/nav_reports"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                    <action
+                        android:id="@+id/action_nav_report_add_page_zero_to_nav_reports_add_page_one"
+                        app:destination="@id/nav_reports_add_page_one"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+                <fragment
+                    android:id="@+id/nav_reports_add_page_one"
+                    android:name="eu.michalkijowski.carvisor.fragments.reports.add.ReportsAddFragmentPageOne"
+                    android:label="@string/report_create"
+                    tools:layout="@layout/fragment_reports_add_page_one" >
+                    <action
+                        android:id="@+id/action_nav_report_add_page_one_to_nav_reports_add_page_zero"
+                        app:destination="@id/nav_reports"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                    <action
+                        android:id="@+id/action_nav_report_add_page_one_to_nav_reports_add_page_two"
+                        app:destination="@id/nav_reports_add_page_two"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+                <fragment
+                    android:id="@+id/nav_reports_add_page_two"
+                    android:name="eu.michalkijowski.carvisor.fragments.reports.add.ReportsAddFragmentPageTwo"
+                    android:label="@string/report_create"
+                    tools:layout="@layout/fragment_reports_add_page_one" >
+                    <action
+                        android:id="@+id/action_nav_report_add_page_two_to_nav_reports_add_page_one"
+                        app:destination="@id/nav_reports_add_page_one"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                    <action
+                        android:id="@+id/action_nav_report_add_page_two_to_nav_reports"
+                        app:destination="@id/nav_reports"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
 </navigation>

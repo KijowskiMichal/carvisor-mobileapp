@@ -1,4 +1,4 @@
-package eu.michalkijowski.carvisor.fragments.reports.list;
+package eu.michalkijowski.carvisor.fragments.reports.add;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
@@ -29,27 +30,31 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import eu.michalkijowski.carvisor.R;
-import eu.michalkijowski.carvisor.data_models.ReportDTO;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
+import eu.michalkijowski.carvisor.data_models.UserNamesDTO;
 import eu.michalkijowski.carvisor.fragments.myFleet.list.RowActionDialog;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.ReportsService;
 import eu.michalkijowski.carvisor.services.UsersService;
 
-public class ReportsListFragment extends Fragment {
+public class ReportsAddFragmentPageOne extends Fragment {
 
     String regex = "";
     private ProgressDialog mProgressDialog;
     ListView listView;
     FloatingActionButton fab;
-
-
+    HashSet<Integer> selectedIds = new HashSet<Integer>();
+    UserNamesDTO[] userNamesDTOS;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -77,7 +82,7 @@ public class ReportsListFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View root = inflater.inflate(R.layout.fragment_reports_list, container, false);
+        View root = inflater.inflate(R.layout.fragment_reports_add_page_one, container, false);
         listView = (ListView) root.findViewById(R.id.myFleetListView);
         /********************************
          * Floating action button
@@ -86,17 +91,23 @@ public class ReportsListFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(ReportsListFragment.this)
-                        .navigate(R.id.action_nav_report_to_nav_report_add,bundle);
+                if (selectedIds.size()>0) {
+                    Bundle bundle = getArguments();
+                    bundle.putIntArray("selected", selectedIds.stream().mapToInt(Integer::intValue).toArray());
+                    NavHostFragment.findNavController(ReportsAddFragmentPageOne.this)
+                            .navigate(R.id.action_nav_report_add_page_one_to_nav_reports_add_page_two,bundle);
+                }
+                else {
+                    Toast.makeText(getContext(), "Nie zaznaczono żadnego kierowcy.", Toast.LENGTH_LONG).show();
+                }
             }
         });
         requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(ReportsListFragment.this)
-                        .navigate(R.id.action_nav_report_to_nav_report,bundle);
+                NavHostFragment.findNavController(ReportsAddFragmentPageOne.this)
+                        .navigate(R.id.action_nav_report_add_page_one_to_nav_reports_add_page_zero,bundle);
             }
         });
         return root;
@@ -116,34 +127,28 @@ public class ReportsListFragment extends Fragment {
             /********************************
              * ListView
              *******************************/
-            //ReportDTO[] reportsList = ReportsService.getReportsList(regex);
-            ReportDTO[] reportsList = new ReportDTO[0];
+            if (userNamesDTOS==null) userNamesDTOS = ReportsService.getUserList(regex);
             List<HashMap<String, String>> list = new ArrayList<>();
-            for (ReportDTO reportDTO : reportsList) {
+            for (UserNamesDTO userNamesDTO : userNamesDTOS) {
                 HashMap item = new HashMap<String, String>();
-                item.put("reportId", String.valueOf(reportDTO.getId()));
-                item.put("name", reportDTO.getName());
-                String status = "Generowanie...";
-                if (!reportDTO.isLoading()) {
-                    switch (reportDTO.getType()) {
-                        case "TRACK":
-                            status = "Raport tras";
-                            break;
-                        case "ECO":
-                            status = "Raport eco";
-                            break;
-                        case "SAFETY":
-                            status = "Raport bezpieczeństwa";
-                            break;
-                    }
+                item.put("userId", String.valueOf(userNamesDTO.getId()));
+                item.put("name", userNamesDTO.getName());
+                item.put("switch", selectedIds.contains(userNamesDTO.getId()) ? android.R.drawable.checkbox_on_background : android.R.drawable.checkbox_off_background);
+                //image
+                try {
+                    byte[] bytes = Base64.decode(userNamesDTO.getImage().replace("data:image/png;base64,", ""), Base64.DEFAULT);
+                    Bitmap bitmap = ImageService.getCircleImage(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    item.put("userImage", new BitmapDrawable(getResources(), bitmap));
                 }
-                item.put("status", status);
+                catch (IllegalArgumentException | NullPointerException e) {
+                    e.printStackTrace();
+                }
                 list.add(item);
             }
             SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), list,
-                    R.layout.fragment_reports_list_row,
-                    new String[]{"reportId", "name", "status"},
-                    new int[]{R.id.reportId, R.id.name, R.id.status});
+                    R.layout.fragment_reports_add_page_one_row,
+                    new String[]{"userId", "name", "switch", "userImage"},
+                    new int[]{R.id.userId, R.id.name, R.id.switch1, R.id.userImage});
             simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
                 public boolean setViewValue(View view, Object data,
                                             String textRepresentation) {
@@ -161,11 +166,11 @@ public class ReportsListFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.loading), true, false);
+            if (userNamesDTOS==null) mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.loading), true, false);
         }
 
         @Override
-        protected void onPostExecute(SimpleAdapter simpleAdapter) {
+        protected void onPostExecute(final SimpleAdapter simpleAdapter) {
             super.onPostExecute(simpleAdapter);
             listView.setAdapter(simpleAdapter);
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -173,13 +178,16 @@ public class ReportsListFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                    TextView idTextView = (TextView) view.findViewById(R.id.reportId);
+                    TextView idTextView = (TextView) view.findViewById(R.id.userId);
                     int identifier = Integer.valueOf(idTextView.getText().toString().trim());
-                    TextView nameTextView = (TextView) view.findViewById(R.id.name);
-                    String name = nameTextView.getText().toString().trim();
-                    RowActionDialog rowActionDialog = new RowActionDialog();
-                    Bundle bundle = new Bundle();
-                    rowActionDialog.show(getFragmentManager(), String.valueOf(identifier), name, ReportsListFragment.this, bundle, getContext());
+                    if (selectedIds.contains(identifier)) {
+                        selectedIds.remove(identifier);
+                        new DownloadDataForList().execute();
+                    }
+                    else {
+                        selectedIds.add(identifier);
+                        new DownloadDataForList().execute();
+                    }
                 }
 
             });
