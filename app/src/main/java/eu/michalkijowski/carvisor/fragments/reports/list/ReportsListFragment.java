@@ -1,4 +1,4 @@
-package eu.michalkijowski.carvisor.fragments.myFleet.list;
+package eu.michalkijowski.carvisor.fragments.reports.list;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -8,9 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.util.Base64;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,31 +23,26 @@ import android.widget.TextView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 import eu.michalkijowski.carvisor.R;
-import eu.michalkijowski.carvisor.activities.HomeActivity;
+import eu.michalkijowski.carvisor.data_models.ReportDTO;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
-import eu.michalkijowski.carvisor.fragments.myFleet.add.MyFleetAddFragment;
-import eu.michalkijowski.carvisor.fragments.settings.SettingsFragment;
+import eu.michalkijowski.carvisor.fragments.myFleet.list.RowActionDialog;
 import eu.michalkijowski.carvisor.services.ImageService;
+import eu.michalkijowski.carvisor.services.ReportsService;
 import eu.michalkijowski.carvisor.services.UsersService;
 
-public class MyFleetListFragment extends Fragment {
+public class ReportsListFragment extends Fragment {
 
     String regex = "";
     private ProgressDialog mProgressDialog;
@@ -84,7 +77,7 @@ public class MyFleetListFragment extends Fragment {
     public View onCreateView(@NonNull final LayoutInflater inflater,
                              final ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View root = inflater.inflate(R.layout.fragment_my_fleet_list, container, false);
+        View root = inflater.inflate(R.layout.fragment_reports_list, container, false);
         listView = (ListView) root.findViewById(R.id.myFleetListView);
         /********************************
          * Floating action button
@@ -94,16 +87,16 @@ public class MyFleetListFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(MyFleetListFragment.this)
-                        .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet_add,bundle);
+                NavHostFragment.findNavController(ReportsListFragment.this)
+                        .navigate(R.id.action_nav_report_to_nav_report,bundle);
             }
         });
         requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
                 Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(MyFleetListFragment.this)
-                        .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet,bundle);
+                NavHostFragment.findNavController(ReportsListFragment.this)
+                        .navigate(R.id.action_nav_report_to_nav_report,bundle);
             }
         });
         return root;
@@ -123,26 +116,34 @@ public class MyFleetListFragment extends Fragment {
             /********************************
              * ListView
              *******************************/
-            UserDTO[] usersDTO = UsersService.getUsersList(regex).getListOfUsers();
+            //ReportDTO[] reportsList = ReportsService.getReportsList(regex);
+            ReportDTO[] reportsList = new ReportDTO[0];
             List<HashMap<String, String>> list = new ArrayList<>();
-            for (UserDTO userDTO : usersDTO) {
+            for (ReportDTO reportDTO : reportsList) {
                 HashMap item = new HashMap<String, String>();
-                item.put("userId", String.valueOf(userDTO.getId()));
-                item.put("name", userDTO.getName() + " " + userDTO.getSurname());
-                item.put("licensePlate", userDTO.getLicensePlate().equals("-1") ? "---" : userDTO.getLicensePlate());
-                item.put("active", userDTO.getStatus());
-                item.put("distance", userDTO.getDistance() + " km");
-                item.put("time", (!userDTO.getStartTime().equals("-1") ? userDTO.getStartTime() + " - " + userDTO.getFinishTime() : (!userDTO.getFinishTime().equals("-1") ? userDTO.getFinishTime() : "---")));
-                //image
-                byte[] bytes = Base64.decode(userDTO.getImage().replace("data:image/png;base64,", ""), Base64.DEFAULT);
-                Bitmap bitmap = ImageService.getCircleImage(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-                item.put("userImage", new BitmapDrawable(getResources(), bitmap));
+                item.put("reportId", String.valueOf(reportDTO.getId()));
+                item.put("name", reportDTO.getName());
+                String status = "Generowanie...";
+                if (!reportDTO.isLoading()) {
+                    switch (reportDTO.getType()) {
+                        case "TRACK":
+                            status = "Raport tras";
+                            break;
+                        case "ECO":
+                            status = "Raport eco";
+                            break;
+                        case "SAFETY":
+                            status = "Raport bezpieczeństwa";
+                            break;
+                    }
+                }
+                item.put("status", status);
                 list.add(item);
             }
             SimpleAdapter simpleAdapter = new SimpleAdapter(getContext(), list,
-                    R.layout.fragment_my_fleet_list_row,
-                    new String[]{"userId", "name", "licensePlate", "active", "distance", "time", "userImage"},
-                    new int[]{R.id.userId, R.id.name, R.id.licensePlate, R.id.active, R.id.distance, R.id.time, R.id.userImage});
+                    R.layout.fragment_reports_list_row,
+                    new String[]{"reportId", "name", "status"},
+                    new int[]{R.id.reportId, R.id.name, R.id.status});
             simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
                 public boolean setViewValue(View view, Object data,
                                             String textRepresentation) {
@@ -172,13 +173,13 @@ public class MyFleetListFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                                         int position, long id) {
-                    TextView idTextView = (TextView) view.findViewById(R.id.userId);
+                    TextView idTextView = (TextView) view.findViewById(R.id.reportId);
                     int identifier = Integer.valueOf(idTextView.getText().toString().trim());
                     TextView nameTextView = (TextView) view.findViewById(R.id.name);
                     String name = nameTextView.getText().toString().trim();
                     RowActionDialog rowActionDialog = new RowActionDialog();
                     Bundle bundle = new Bundle();
-                    rowActionDialog.show(getFragmentManager(), String.valueOf(identifier), name, MyFleetListFragment.this, bundle, getContext());
+                    rowActionDialog.show(getFragmentManager(), String.valueOf(identifier), name, ReportsListFragment.this, bundle, getContext());
                 }
 
             });

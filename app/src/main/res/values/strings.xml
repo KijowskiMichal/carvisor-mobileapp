@@ -124,4 +124,5 @@
     <string name="deleting_device">Usuwanie pojazdu</string>
     <string name="remove_device_ok">Usuń pojazd</string>
     <string name="saving_image">Zapisywanie zdjęcia</string>
+    <string name="report">Raporty</string>
 </resources>
