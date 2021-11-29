@@ -11,6 +11,7 @@ import eu.michalkijowski.carvisor.data_models.DeviceEditDTO;
 import eu.michalkijowski.carvisor.data_models.DeviceNamesDTO;
 import eu.michalkijowski.carvisor.data_models.DevicesDTO;
 import eu.michalkijowski.carvisor.data_models.ImageDTO;
+import eu.michalkijowski.carvisor.data_models.MapWrapperDTO;
 import eu.michalkijowski.carvisor.data_models.UserNamesDTO;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -38,13 +39,30 @@ public class MapService {
     public static DeviceNamesDTO[] getDeviceList(String regex) {
         try {
             Request request = new Request.Builder()
-                .url(MainActivity.BaseURL + "/API/devices/listDevicesNames/"+(regex.equals("") ? "$" : regex)+"/")
-                .build();
+                    .url(MainActivity.BaseURL + "/API/devices/listDevicesNames/"+(regex.equals("") ? "$" : regex)+"/")
+                    .build();
 
             Call call = MainActivity.defaultHttpClient.newCall(request);
             Response response = call.execute();
             DeviceNamesDTO[] deviceNamesDTOS = new Gson().fromJson(response.body().string(), DeviceNamesDTO[].class);
             return  deviceNamesDTOS;
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static MapWrapperDTO getMapFromUser(int id, long timestamp) {
+        try {
+            System.out.println(MainActivity.BaseURL + "/API/track/getTrackData/"+id+"/"+timestamp+"/");
+            Request request = new Request.Builder()
+                    .url(MainActivity.BaseURL + "/API/track/getTrackData/"+id+"/"+timestamp+"/")
+                    .build();
+
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            MapWrapperDTO mapWrapperDTO = new Gson().fromJson(response.body().string(), MapWrapperDTO.class);
+            return  mapWrapperDTO;
         } catch (IOException | SecurityException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,6 +21,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -28,15 +30,22 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.activities.MainActivity;
+import eu.michalkijowski.carvisor.data_models.MapDeviceRowDTO;
+import eu.michalkijowski.carvisor.data_models.MapRowDTO;
+import eu.michalkijowski.carvisor.data_models.MapWrapperDTO;
+import eu.michalkijowski.carvisor.services.MapService;
 
 public class MapFragment extends Fragment {
 
@@ -46,8 +55,7 @@ public class MapFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     MapView map = null;
     boolean personChoose = false;
-    public static String startTimestamp;
-    public static String endTimestamp;
+    public static String timestamp;
     public static String date;
     public static boolean flag = false;
     public static int selectedId;
@@ -65,23 +73,6 @@ public class MapFragment extends Fragment {
     public void onResume() {
         super.onResume();
         map.onResume();
-    }
-
-    public void changeDate(Date date) {
-        Calendar end = Calendar.getInstance();
-        end.setTime(date);
-        end.set(Calendar.HOUR_OF_DAY, 23);
-        end.set(Calendar.MINUTE, 59);
-        end.set(Calendar.SECOND, 59);
-        end.set(Calendar.MILLISECOND, 999);
-        Calendar start = Calendar.getInstance();
-        start.setTime(date);
-        start.set(Calendar.HOUR_OF_DAY, 0);
-        start.set(Calendar.MINUTE, 0);
-        start.set(Calendar.SECOND, 0);
-        start.set(Calendar.MILLISECOND, 0);
-        startTimestamp = String.valueOf(start.getTimeInMillis()/1000);
-        endTimestamp = String.valueOf(end.getTimeInMillis()/1000);
     }
 
     @Override
@@ -181,6 +172,13 @@ public class MapFragment extends Fragment {
         Date date = new Date();
         SimpleDateFormat changeFormat = new SimpleDateFormat("dd.MM.yyyy");
         this.date = changeFormat.format(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        this.timestamp = String.valueOf(calendar.getTimeInMillis()/1000);
         ((TextView)root.findViewById(R.id.textView22)).setText(this.date);
         /*********************
          Fragment configuration
@@ -244,10 +242,10 @@ public class MapFragment extends Fragment {
         @Override
         protected void onPostExecute(DatePicker datePicker) {
             super.onPostExecute(datePicker);
-            MapFragment.startTimestamp = datePicker.getStartTimestamp();
-            MapFragment.endTimestamp = datePicker.getEndTimestamp();
+            MapFragment.timestamp = datePicker.getTimestamp();
             MapFragment.date = datePicker.getDate();
             dateForm.setText(MapFragment.date);
+            if (selectedId!=0) new UpdateMap().execute();
         }
     }
 
@@ -269,6 +267,7 @@ public class MapFragment extends Fragment {
         protected void onPostExecute(PersonDialog personDialog) {
             super.onPostExecute(personDialog);
             selectForm.setText(MapFragment.selectedName);
+            new UpdateMap().execute();
         }
     }
 
@@ -290,20 +289,60 @@ public class MapFragment extends Fragment {
         protected void onPostExecute(DeviceDialog deviceDialog) {
             super.onPostExecute(deviceDialog);
             selectForm.setText(MapFragment.selectedName);
+            new UpdateMap().execute();
         }
     }
 
-    /*private class UpdateMap extends AsyncTask<Void, Void, DeviceDialog> {
+    private class UpdateMap extends AsyncTask<Void, Void, MapWrapperDTO> {
         @Override
-        protected DeviceDialog doInBackground(Void... voids) {
-
-            return deviceDialogs[0];
+        protected MapWrapperDTO doInBackground(Void... voids) {
+            return MapService.getMapFromUser(selectedId, Long.valueOf(timestamp));
         }
 
         @Override
-        protected void onPostExecute(DeviceDialog deviceDialog) {
-            super.onPostExecute(deviceDialog);
-            selectForm.setText(MapFragment.selectedName);
+        protected void onPostExecute(MapWrapperDTO mapWrapperDTO) {
+            super.onPostExecute(mapWrapperDTO);
+            map.getOverlays().clear();
+            map.invalidate();
+            if (mapWrapperDTO.getPoints().length>0) {
+                Polyline polyline = new Polyline();
+                polyline.setColor(Color.BLUE);
+                polyline.setWidth(8);
+                map.getOverlays().add(polyline);
+
+                ArrayList<GeoPoint> pathPoints = new ArrayList<>();
+                for (MapRowDTO mapRowDTO : mapWrapperDTO.getPoints()) {
+                    pathPoints.add(new GeoPoint(mapRowDTO.getGpsX(), mapRowDTO.getGpsY()));
+                }
+                polyline.setPoints(pathPoints);
+                for (MapRowDTO mapRowDTO : mapWrapperDTO.getPoints()) {
+                    GeoPoint startPoint = new GeoPoint(mapRowDTO.getGpsX(), mapRowDTO.getGpsY());
+                    Marker marker = new Marker(map);
+                    marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.point));
+                    marker.setPosition(startPoint);
+                    marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+                    marker.setTitle("Obroty: "+mapRowDTO.getRpm()+"\nPrędkość: "+mapRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapRowDTO.getTime()))));
+                    map.getOverlays().add(marker);
+                }
+                for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getStartPoints()) {
+                    GeoPoint startPoint = new GeoPoint(mapDeviceRowDTO.getGpsX(), mapDeviceRowDTO.getGpsY());
+                    Marker marker = new Marker(map);
+                    marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.green));
+                    marker.setPosition(startPoint);
+                    marker.setAnchor(Marker.ANCHOR_RIGHT, Marker.ANCHOR_BOTTOM);
+                    marker.setTitle("Początek trasy\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                    map.getOverlays().add(marker);
+                }
+                for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getEndPoints()) {
+                    GeoPoint startPoint = new GeoPoint(mapDeviceRowDTO.getGpsX(), mapDeviceRowDTO.getGpsY());
+                    Marker marker = new Marker(map);
+                    marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.red));
+                    marker.setPosition(startPoint);
+                    marker.setAnchor(Marker.ANCHOR_LEFT, Marker.ANCHOR_BOTTOM);
+                    marker.setTitle("Koniec trasy\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                    map.getOverlays().add(marker);
+                }
+            }
         }
-    }*/
+    }
 }

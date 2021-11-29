@@ -13,8 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class DatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-    String startTimestamp;
-    String endTimestamp;
+    String timestamp;
     String date;
     MapFragment fragment;
 
@@ -40,41 +39,32 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
 
     @Override
     public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
-        Calendar end = Calendar.getInstance();
-        end.set(Calendar.YEAR, year);
-        end.set(Calendar.MONTH, month);
-        end.set(Calendar.DAY_OF_MONTH, day);
-        end.set(Calendar.HOUR_OF_DAY, 23);
-        end.set(Calendar.MINUTE, 59);
-        end.set(Calendar.SECOND, 59);
-        end.set(Calendar.MILLISECOND, 999);
-        Calendar start = Calendar.getInstance();
-        start.set(Calendar.YEAR, year);
-        start.set(Calendar.MONTH, month);
-        start.set(Calendar.DAY_OF_MONTH, day);
-        start.set(Calendar.HOUR_OF_DAY, 0);
-        start.set(Calendar.MINUTE, 0);
-        start.set(Calendar.SECOND, 0);
-        start.set(Calendar.MILLISECOND, 0);
-        startTimestamp = String.valueOf(start.getTimeInMillis()/1000);
-        endTimestamp = String.valueOf(end.getTimeInMillis()/1000);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        timestamp = String.valueOf(calendar.getTimeInMillis()/1000);
+        System.out.println(timestamp);
         SimpleDateFormat changeFormat = new SimpleDateFormat("dd.MM.yyyy");
-        date = changeFormat.format(start.getTime());
-        MapFragment.startTimestamp = startTimestamp;
-        MapFragment.endTimestamp = endTimestamp;
+        date = changeFormat.format(calendar.getTime());
+        MapFragment.timestamp = timestamp;
         MapFragment.date = date;
         MapFragment.flag = true;
     }
 
-    public String getStartTimestamp() {
-        return startTimestamp;
-    }
-
-    public String getEndTimestamp() {
-        return endTimestamp;
-    }
-
     public String getDate() {
         return date;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }
