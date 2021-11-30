@@ -296,7 +296,12 @@ public class MapFragment extends Fragment {
     private class UpdateMap extends AsyncTask<Void, Void, MapWrapperDTO> {
         @Override
         protected MapWrapperDTO doInBackground(Void... voids) {
-            return MapService.getMapFromUser(selectedId, Long.valueOf(timestamp));
+            if (personChoose) {
+                return MapService.getMapFromUser(selectedId, Long.valueOf(timestamp));
+            }
+            else {
+                return MapService.getMapFromDevice(selectedId, Long.valueOf(timestamp));
+            }
         }
 
         @Override
@@ -324,23 +329,45 @@ public class MapFragment extends Fragment {
                     marker.setTitle("Obroty: "+mapRowDTO.getRpm()+"\nPrędkość: "+mapRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapRowDTO.getTime()))));
                     map.getOverlays().add(marker);
                 }
-                for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getStartPoints()) {
-                    GeoPoint startPoint = new GeoPoint(mapDeviceRowDTO.getGpsX(), mapDeviceRowDTO.getGpsY());
-                    Marker marker = new Marker(map);
-                    marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.green));
-                    marker.setPosition(startPoint);
-                    marker.setAnchor(Marker.ANCHOR_RIGHT, Marker.ANCHOR_BOTTOM);
-                    marker.setTitle("Początek trasy\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
-                    map.getOverlays().add(marker);
+                if (personChoose) {
+                    for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getStartPoints()) {
+                        GeoPoint startPoint = new GeoPoint(mapDeviceRowDTO.getGpsX(), mapDeviceRowDTO.getGpsY());
+                        Marker marker = new Marker(map);
+                        marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.green));
+                        marker.setPosition(startPoint);
+                        marker.setAnchor(Marker.ANCHOR_RIGHT, Marker.ANCHOR_BOTTOM);
+                        marker.setTitle("Początek trasy\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                        map.getOverlays().add(marker);
+                    }
+                    for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getEndPoints()) {
+                        GeoPoint startPoint = new GeoPoint(mapDeviceRowDTO.getGpsX(), mapDeviceRowDTO.getGpsY());
+                        Marker marker = new Marker(map);
+                        marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.red));
+                        marker.setPosition(startPoint);
+                        marker.setAnchor(Marker.ANCHOR_LEFT, Marker.ANCHOR_BOTTOM);
+                        marker.setTitle("Koniec trasy\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                        map.getOverlays().add(marker);
+                    }
                 }
-                for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getEndPoints()) {
-                    GeoPoint startPoint = new GeoPoint(mapDeviceRowDTO.getGpsX(), mapDeviceRowDTO.getGpsY());
-                    Marker marker = new Marker(map);
-                    marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.red));
-                    marker.setPosition(startPoint);
-                    marker.setAnchor(Marker.ANCHOR_LEFT, Marker.ANCHOR_BOTTOM);
-                    marker.setTitle("Koniec trasy\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
-                    map.getOverlays().add(marker);
+                else {
+                    for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getStartPoints()) {
+                        GeoPoint startPoint = new GeoPoint(mapDeviceRowDTO.getGpsX(), mapDeviceRowDTO.getGpsY());
+                        Marker marker = new Marker(map);
+                        marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.green));
+                        marker.setPosition(startPoint);
+                        marker.setAnchor(Marker.ANCHOR_RIGHT, Marker.ANCHOR_BOTTOM);
+                        marker.setTitle("Początek trasy\nKierowca: "+mapDeviceRowDTO.getUser()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                        map.getOverlays().add(marker);
+                    }
+                    for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getEndPoints()) {
+                        GeoPoint startPoint = new GeoPoint(mapDeviceRowDTO.getGpsX(), mapDeviceRowDTO.getGpsY());
+                        Marker marker = new Marker(map);
+                        marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.red));
+                        marker.setPosition(startPoint);
+                        marker.setAnchor(Marker.ANCHOR_LEFT, Marker.ANCHOR_BOTTOM);
+                        marker.setTitle("Koniec trasy\nKierowca: "+mapDeviceRowDTO.getUser()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                        map.getOverlays().add(marker);
+                    }
                 }
             }
         }

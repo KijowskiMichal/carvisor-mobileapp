@@ -9,6 +9,7 @@ public class MapDeviceRowDTO {
     private int speed;
     private double gpsY;
     private String vehicle;
+    private String user;
 
     public int getThrottle() {
         return throttle;
@@ -72,5 +73,13 @@ public class MapDeviceRowDTO {
 
     public void setVehicle(String vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

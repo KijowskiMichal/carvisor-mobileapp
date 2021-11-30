@@ -54,9 +54,24 @@ public class MapService {
 
     public static MapWrapperDTO getMapFromUser(int id, long timestamp) {
         try {
-            System.out.println(MainActivity.BaseURL + "/API/track/getTrackData/"+id+"/"+timestamp+"/");
             Request request = new Request.Builder()
                     .url(MainActivity.BaseURL + "/API/track/getTrackData/"+id+"/"+timestamp+"/")
+                    .build();
+
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            MapWrapperDTO mapWrapperDTO = new Gson().fromJson(response.body().string(), MapWrapperDTO.class);
+            return  mapWrapperDTO;
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static MapWrapperDTO getMapFromDevice(int id, long timestamp) {
+        try {
+            Request request = new Request.Builder()
+                    .url(MainActivity.BaseURL + "/API/track/getTrackDataForDevice/"+id+"/"+timestamp+"/")
                     .build();
 
             Call call = MainActivity.defaultHttpClient.newCall(request);

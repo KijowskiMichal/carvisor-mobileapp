@@ -37,7 +37,6 @@ import java.util.List;
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.ReportDTO;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
-import eu.michalkijowski.carvisor.fragments.myFleet.list.RowActionDialog;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.ReportsService;
 import eu.michalkijowski.carvisor.services.UsersService;
@@ -116,8 +115,7 @@ public class ReportsListFragment extends Fragment {
             /********************************
              * ListView
              *******************************/
-            //ReportDTO[] reportsList = ReportsService.getReportsList(regex);
-            ReportDTO[] reportsList = new ReportDTO[0];
+            ReportDTO[] reportsList = ReportsService.getReportsList(regex).getListOfRaports();
             List<HashMap<String, String>> list = new ArrayList<>();
             for (ReportDTO reportDTO : reportsList) {
                 HashMap item = new HashMap<String, String>();

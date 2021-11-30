@@ -2,13 +2,12 @@ package eu.michalkijowski.carvisor.services;
 
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import eu.michalkijowski.carvisor.activities.MainActivity;
-import eu.michalkijowski.carvisor.data_models.AuthorizationDTO;
-import eu.michalkijowski.carvisor.data_models.DeviceAddDTO;
 import eu.michalkijowski.carvisor.data_models.ReportAddDTO;
-import eu.michalkijowski.carvisor.data_models.ReportDTO;
+import eu.michalkijowski.carvisor.data_models.ReportsDTO;
 import eu.michalkijowski.carvisor.data_models.UserNamesDTO;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -17,7 +16,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ReportsService {
-    public static ReportDTO[] getReportsList(String regex) {
+    public static ReportsDTO getReportsList(String regex) {
         try {
             Request request = new Request.Builder()
                     .url(MainActivity.BaseURL + "/API/raports/list/1/10000/"+(regex.equals("") ? "$" : regex)+"/")
@@ -25,7 +24,7 @@ public class ReportsService {
 
             Call call = MainActivity.defaultHttpClient.newCall(request);
             Response response = call.execute();
-            ReportDTO[] reportDTOS = new Gson().fromJson(response.body().string(), ReportDTO[].class);
+            ReportsDTO reportDTOS = new Gson().fromJson(response.body().string(), ReportsDTO.class);
             return  reportDTOS;
         } catch (IOException | SecurityException e) {
             e.printStackTrace();
@@ -56,7 +55,7 @@ public class ReportsService {
             Request request = new Request.Builder().url(MainActivity.BaseURL+"/API/raports/add").post(body).build();
             Call call = MainActivity.defaultHttpClient.newCall(request);
             Response response = call.execute();
-            if (response.code()==201)
+            if (response.code()==200)
             {
                 return true;
             }
@@ -64,5 +63,32 @@ public class ReportsService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static void deleteReport(Integer id) {
+        try {
+            Request request = new Request.Builder().delete()
+                    .url(MainActivity.BaseURL + "/API/raports/remove/"+id+"/")
+                    .build();
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            call.execute();
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static byte[] downloadReport(Integer id) {
+        try {
+            Request request = new Request.Builder()
+                    .url(MainActivity.BaseURL + "/API/demo/getPdf/")
+                    .build();
+
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            return  response.body().bytes();
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
