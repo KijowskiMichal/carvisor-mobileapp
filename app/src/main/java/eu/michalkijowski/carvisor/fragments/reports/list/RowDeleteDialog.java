@@ -42,7 +42,7 @@ public class RowDeleteDialog extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.ic_add)
                 .setTitle("Czy chcesz usunąć raport "+name+"?")
-                .setPositiveButton(R.string.remove_user_ok,
+                .setPositiveButton(R.string.remove_report_ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 new DeleteRaport().execute();
@@ -69,7 +69,7 @@ public class RowDeleteDialog extends DialogFragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.deleting_user), true, false);
+            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.deleting_report), true, false);
         }
 
         @Override

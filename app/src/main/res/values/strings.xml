@@ -126,4 +126,6 @@
     <string name="saving_image">Zapisywanie zdjęcia</string>
     <string name="report">Raporty</string>
     <string name="report_create">Tworzenie raportu</string>
+    <string name="deleting_report">Usuwanie raportu</string>
+    <string name="remove_report_ok">Usuń raport</string>
 </resources>

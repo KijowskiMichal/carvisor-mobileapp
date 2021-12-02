@@ -80,7 +80,7 @@ public class ReportsService {
     public static byte[] downloadReport(Integer id) {
         try {
             Request request = new Request.Builder()
-                    .url(MainActivity.BaseURL + "/API/demo/getPdf/")
+                    .url(MainActivity.BaseURL + "/API/raports/getPdf/"+id+"/")
                     .build();
 
             Call call = MainActivity.defaultHttpClient.newCall(request);
