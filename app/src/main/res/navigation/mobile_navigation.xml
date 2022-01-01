@@ -157,6 +157,20 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_calendar"
+        android:name="eu.michalkijowski.carvisor.fragments.calendar.CalendarFragment"
+        android:label="@string/calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/action_nav_calendar_to_nav_calendar"
+            app:destination="@id/nav_calendar"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_ecopoints"
         android:name="eu.michalkijowski.carvisor.fragments.ecopoints.EcopointsListFragment"
         android:label="@string/ecopoints"
@@ -276,6 +290,41 @@
                     <action
                         android:id="@+id/action_nav_report_add_page_two_to_nav_reports"
                         app:destination="@id/nav_reports"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+    <fragment
+        android:id="@+id/nav_errors"
+        android:name="eu.michalkijowski.carvisor.fragments.errors.DateRangeSelectorFragment"
+        android:label="@string/errors"
+        tools:layout="@layout/fragment_date_range_selector" >
+        <action
+            android:id="@+id/action_nav_errors_to_nav_errors"
+            app:destination="@id/nav_errors"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_errors_to_nav_errors_list"
+            app:destination="@id/nav_errors_list"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+                <fragment
+                    android:id="@+id/nav_errors_list"
+                    android:name="eu.michalkijowski.carvisor.fragments.errors.ErrorsFragment"
+                    android:label="@string/errors"
+                    tools:layout="@layout/fragment_date_range_selector" >
+                    <action
+                        android:id="@+id/action_nav_errors_list_to_nav_errors"
+                        app:destination="@id/nav_errors"
                         app:enterAnim="@anim/nav_default_enter_anim"
                         app:exitAnim="@anim/nav_default_exit_anim"
                         app:popEnterAnim="@anim/nav_default_pop_enter_anim"

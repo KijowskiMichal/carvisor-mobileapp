@@ -27,6 +27,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.internal.JavaNetCookieJar;
+import eu.michalkijowski.carvisor.services.utils.ResponseInterceptor;
 
 public class MainActivity extends AppCompatActivity {
     public static String BaseURL = "https://carvisor.pl";
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
-        defaultHttpClient = new OkHttpClient.Builder().cookieJar(new JavaNetCookieJar(cookieManager)).build();
+        defaultHttpClient = new OkHttpClient.Builder().cookieJar(new JavaNetCookieJar(cookieManager)).addInterceptor(new ResponseInterceptor()).build();
         setContentView(R.layout.activity_main);
         if (android.os.Build.VERSION.SDK_INT > 9)
         {
