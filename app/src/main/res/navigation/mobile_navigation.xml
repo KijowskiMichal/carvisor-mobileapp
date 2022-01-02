@@ -321,10 +321,45 @@
                     android:id="@+id/nav_errors_list"
                     android:name="eu.michalkijowski.carvisor.fragments.errors.ErrorsFragment"
                     android:label="@string/errors"
-                    tools:layout="@layout/fragment_date_range_selector" >
+                    tools:layout="@layout/fragment_error_list" >
                     <action
                         android:id="@+id/action_nav_errors_list_to_nav_errors"
                         app:destination="@id/nav_errors"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+    <fragment
+        android:id="@+id/nav_notification"
+        android:name="eu.michalkijowski.carvisor.fragments.notification.DateRangeSelectorFragment"
+        android:label="@string/notification"
+        tools:layout="@layout/fragment_date_range_selector" >
+        <action
+            android:id="@+id/action_nav_notification_to_nav_notification"
+            app:destination="@id/nav_notification"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_notification_to_nav_notification_list"
+            app:destination="@id/nav_notification_list"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+                <fragment
+                    android:id="@+id/nav_notification_list"
+                    android:name="eu.michalkijowski.carvisor.fragments.notification.NotificationFragment"
+                    android:label="@string/notification"
+                    tools:layout="@layout/fragment_notification_list" >
+                    <action
+                        android:id="@+id/action_nav_notification_list_to_nav_notification"
+                        app:destination="@id/nav_notification"
                         app:enterAnim="@anim/nav_default_enter_anim"
                         app:exitAnim="@anim/nav_default_exit_anim"
                         app:popEnterAnim="@anim/nav_default_pop_enter_anim"

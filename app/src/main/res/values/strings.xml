@@ -157,4 +157,6 @@
     <string name="material_calendar_negative_button">Anuluj</string>
     <string name="show_records">Pokaż wyniki</string>
     <string name="select_date_range_before">Zaznacz najpierw zakres daty</string>
+    <string name="LEAVING_THE_ZONE">Opuszczono strefę o </string>
+    <string name="SPEEDING">Przekroczono prędkość o</string>
 </resources>
