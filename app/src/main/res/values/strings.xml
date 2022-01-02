@@ -159,4 +159,10 @@
     <string name="select_date_range_before">Zaznacz najpierw zakres daty</string>
     <string name="LEAVING_THE_ZONE">Opuszczono strefę o </string>
     <string name="SPEEDING">Przekroczono prędkość o</string>
+    <string name="channel_name">Carvisor_chanel</string>
+    <string name="channel_description">Carvisor chanel description</string>
+    <string name="LEAVING_THE_ZONE_WATCHWORD">Uwaga!</string>
+    <string name="SPEEDING_WATCHWORD">Zwolnij!</string>
+    <string name="OVER_HOURS_WATCHWORD">Uwaga!</string>
+    <string name="OVER_HOURS">Pojazd porusza się poza określonymi godzinami pracy</string>
 </resources>

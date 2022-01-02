@@ -1,34 +1,63 @@
 package eu.michalkijowski.carvisor.activities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.os.SystemClock;
 import android.view.Menu;
+import android.view.View;
+import android.widget.SimpleAdapter;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import eu.michalkijowski.carvisor.R;
+import eu.michalkijowski.carvisor.data_models.NewNotificationDTO;
+import eu.michalkijowski.carvisor.data_models.NotificationMessageDTO;
+import eu.michalkijowski.carvisor.fragments.devices.list.DevicesListFragment;
 import eu.michalkijowski.carvisor.services.AuthorizationService;
+import eu.michalkijowski.carvisor.services.NotificationService;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private static final String CHANNEL_ID = "CARVISOR_CHANEL_ID";
     private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
     private DrawerLayout drawer;
+    NotificationCompat.Builder builder;
+    NotificationManager notificationManager;
+    int idPopup = 0;
+    int ID_POPUP_OFFSET = 1876;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNotificationChannel();
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.logo_short)
+                .setSound(alarmSound)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,6 +72,18 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        NotificationService.getNewNotifications();
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new NewNotification().execute();
+                    }
+                });
+            }
+        }, 0, 5000);
     }
 
     @Override
@@ -68,5 +109,31 @@ public class HomeActivity extends AppCompatActivity {
     public void settings(View view) {
         navController.navigate(R.id.nav_settings);
         drawer.close();
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private class NewNotification extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... voids) {
+            ArrayList<NotificationMessageDTO> listOfNewNotification = NotificationService.getNotificationMessageList(getApplicationContext());
+            for (NotificationMessageDTO newNotification : listOfNewNotification) {
+                builder.setContentTitle(newNotification.getTitle())
+                        .setContentText(newNotification.getContent());
+                notificationManager.notify(ID_POPUP_OFFSET+idPopup, builder.build());
+                idPopup++;
+            }
+            return null;
+        }
     }
 }
