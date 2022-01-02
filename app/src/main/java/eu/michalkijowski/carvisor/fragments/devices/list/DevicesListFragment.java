@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,7 @@ import java.util.List;
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.DeviceDTO;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
+import eu.michalkijowski.carvisor.fragments.myFleet.list.MyFleetListFragment;
 import eu.michalkijowski.carvisor.services.DevicesService;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.UsersService;
@@ -84,6 +86,14 @@ public class DevicesListFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 NavHostFragment.findNavController(DevicesListFragment.this)
                         .navigate(R.id.action_nav_devices_to_nav_devices_add,bundle);
+            }
+        });
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                Bundle bundle = new Bundle();
+                NavHostFragment.findNavController(DevicesListFragment.this)
+                        .navigate(R.id.action_nav_devices_to_nav_devices,bundle);
             }
         });
         return root;

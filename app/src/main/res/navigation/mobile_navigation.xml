@@ -176,8 +176,8 @@
         android:label="@string/ecopoints"
         tools:layout="@layout/fragment_ecopoints_list" >
         <action
-            android:id="@+id/action_nav_my_fleet_to_nav_my_fleet"
-            app:destination="@id/nav_my_fleet"
+            android:id="@+id/action_nav_ecopoints_to_nav_ecopoints"
+            app:destination="@id/nav_ecopoints"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -190,8 +190,8 @@
         android:label="@string/safetypoints"
         tools:layout="@layout/fragment_safety_list" >
         <action
-            android:id="@+id/action_nav_safetypoints_to_nav_my_fleet"
-            app:destination="@id/nav_my_fleet"
+            android:id="@+id/action_nav_safetypoints_to_nav_safetypoints"
+            app:destination="@id/nav_safetypoints"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
@@ -204,8 +204,8 @@
         android:label="@string/map"
         tools:layout="@layout/fragment_map" >
         <action
-            android:id="@+id/action_nav_map_to_nav_my_fleet"
-            app:destination="@id/nav_my_fleet"
+            android:id="@+id/action_nav_map_to_nav_my_map"
+            app:destination="@id/nav_map"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"

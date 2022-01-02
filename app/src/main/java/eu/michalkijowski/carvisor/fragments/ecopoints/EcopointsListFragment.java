@@ -75,7 +75,7 @@ public class EcopointsListFragment extends Fragment {
             public void handleOnBackPressed() {
                 Bundle bundle = new Bundle();
                 NavHostFragment.findNavController(EcopointsListFragment.this)
-                        .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet,bundle);
+                        .navigate(R.id.action_nav_ecopoints_to_nav_ecopoints,bundle);
             }
         });
         return root;

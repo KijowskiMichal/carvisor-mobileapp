@@ -45,6 +45,7 @@ import eu.michalkijowski.carvisor.activities.MainActivity;
 import eu.michalkijowski.carvisor.data_models.MapDeviceRowDTO;
 import eu.michalkijowski.carvisor.data_models.MapRowDTO;
 import eu.michalkijowski.carvisor.data_models.MapWrapperDTO;
+import eu.michalkijowski.carvisor.fragments.devices.list.DevicesListFragment;
 import eu.michalkijowski.carvisor.services.MapService;
 
 public class MapFragment extends Fragment {
@@ -188,7 +189,7 @@ public class MapFragment extends Fragment {
             public void handleOnBackPressed() {
                 Bundle bundle = new Bundle();
                 NavHostFragment.findNavController(MapFragment.this)
-                        .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet,bundle);
+                        .navigate(R.id.action_nav_map_to_nav_my_map,bundle);
             }
         });
         return root;

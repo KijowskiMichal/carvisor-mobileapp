@@ -78,7 +78,7 @@ public class SafetyListFragment extends Fragment {
             public void handleOnBackPressed() {
                 Bundle bundle = new Bundle();
                 NavHostFragment.findNavController(SafetyListFragment.this)
-                        .navigate(R.id.action_nav_safetypoints_to_nav_my_fleet,bundle);
+                        .navigate(R.id.action_nav_safetypoints_to_nav_safetypoints,bundle);
             }
         });
         return root;
