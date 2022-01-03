@@ -39,12 +39,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import eu.michalkijowski.carvisor.R;
+import eu.michalkijowski.carvisor.activities.HomeActivity;
 import eu.michalkijowski.carvisor.activities.MainActivity;
+import eu.michalkijowski.carvisor.data_models.DeviceNamesDTO;
 import eu.michalkijowski.carvisor.data_models.MapDeviceRowDTO;
 import eu.michalkijowski.carvisor.data_models.MapRowDTO;
 import eu.michalkijowski.carvisor.data_models.MapWrapperDTO;
+import eu.michalkijowski.carvisor.data_models.UserNamesDTO;
 import eu.michalkijowski.carvisor.fragments.devices.list.DevicesListFragment;
 import eu.michalkijowski.carvisor.services.MapService;
 
@@ -223,6 +228,51 @@ public class MapFragment extends Fragment {
             mapController.setZoom(16);
             GeoPoint startPoint = new GeoPoint(52.4604487,16.9160836);
             mapController.setCenter(startPoint);
+            new Timer().scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        /*********************
+                         * Pokaż na mapie
+                         ********************/
+                        System.out.println("pokaznamapie");
+                        Bundle bundle = getArguments();
+                        if (bundle.getInt("mapUserID", -1)!=-1) {
+                            personChoose = true;
+                            MapFragment.selectedId = bundle.getInt("mapUserID");
+                        }
+                        else if (bundle.getInt("mapDeviceID", -1)!=-1) {
+                            personChoose = false;
+                            MapFragment.selectedId = bundle.getInt("mapDeviceID");
+                        }
+                        if (personChoose) {
+                            ((TextView)getView().findViewById(R.id.textView20)).setText("Wybierz kierowcę");
+                            ((ImageView)getView().findViewById(R.id.imageView4)).setImageResource(R.drawable.tab2);
+                            final UserNamesDTO[] userNamesDTOS = MapService.getUserList("$");
+                            for (UserNamesDTO userNamesDTO : userNamesDTOS) {
+                                if (userNamesDTO.getId()==MapFragment.selectedId) {
+                                    MapFragment.selectedName =userNamesDTO.getName();
+                                }
+                            }
+                        }
+                        else {
+                            ((TextView)getView().findViewById(R.id.textView20)).setText("Wybierz pojazd");
+                            ((ImageView)getView().findViewById(R.id.imageView4)).setImageResource(R.drawable.tab);
+                            final DeviceNamesDTO[] deviceNamesDTOS = MapService.getDeviceList("$");
+                            for (DeviceNamesDTO deviceNamesDTO : deviceNamesDTOS) {
+                                if (deviceNamesDTO.getId()==MapFragment.selectedId) {
+                                    MapFragment.selectedName =deviceNamesDTO.getName();
+                                }
+                            }
+                        }
+                        selectForm.setText(MapFragment.selectedName);
+                        new UpdateMap().execute();
+                    }
+                });
+                }
+            }, 0, 3000);
         }
     }
 

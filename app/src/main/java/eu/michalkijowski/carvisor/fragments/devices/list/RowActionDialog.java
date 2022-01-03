@@ -49,7 +49,9 @@ public class RowActionDialog extends DialogFragment {
                             new RowDeleteDialog().show(manager, tag, name, fragment, context);
                         }
                         else if (which==2) {
-                            // pokaż na mapie
+                            bundle.putInt("mapDeviceID", Integer.valueOf(tag));
+                            NavHostFragment.findNavController(fragment)
+                                    .navigate(R.id.action_nav_devices_to_nav_map,bundle);
                         }
                     }
                 });
