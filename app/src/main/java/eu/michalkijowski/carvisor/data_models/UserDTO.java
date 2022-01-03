@@ -3,12 +3,12 @@ package eu.michalkijowski.carvisor.data_models;
 public class UserDTO {
     String nick;
     String image;
-    String finishTime;
+    int finishTime;
     String licensePlate;
     int distance;
     String surname;
     String name;
-    String startTime;
+    int startTime;
     int id;
     String status;
 
@@ -28,11 +28,11 @@ public class UserDTO {
         this.image = image;
     }
 
-    public String getFinishTime() {
+    public int getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(String finishTime) {
+    public void setFinishTime(int finishTime) {
         this.finishTime = finishTime;
     }
 
@@ -68,11 +68,11 @@ public class UserDTO {
         this.name = name;
     }
 
-    public String getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 

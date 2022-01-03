@@ -37,7 +37,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -132,7 +134,7 @@ public class MyFleetListFragment extends Fragment {
                 item.put("licensePlate", userDTO.getLicensePlate().equals("-1") ? "---" : userDTO.getLicensePlate());
                 item.put("active", userDTO.getStatus());
                 item.put("distance", userDTO.getDistance() + " km");
-                item.put("time", (!userDTO.getStartTime().equals("-1") ? userDTO.getStartTime() + " - " + userDTO.getFinishTime() : (!userDTO.getFinishTime().equals("-1") ? userDTO.getFinishTime() : "---")));
+                item.put("time", userDTO.getStartTime()!=-1 ? ((new SimpleDateFormat("HH:mm").format(new Date(userDTO.getStartTime())))+(userDTO.getFinishTime()!=-1 ? (" - "+(new SimpleDateFormat("HH:mm").format(new Date(userDTO.getFinishTime())))) : " - teraz")) : "------");
                 //image
                 try {
                     byte[] bytes = Base64.decode(userDTO.getImage().replace("data:image/png;base64,", ""), Base64.DEFAULT);
