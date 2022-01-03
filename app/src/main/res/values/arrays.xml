@@ -4,6 +4,7 @@
         <item>Edytuj użytkownika</item>
         <item>Usuń użytkownika</item>
         <item>Pokaż na mapie</item>
+        <item>Przypisz NFC tag</item>
     </string-array>
     <string-array name="my_devices_list_row_action">
         <item>Edytuj pojazd</item>

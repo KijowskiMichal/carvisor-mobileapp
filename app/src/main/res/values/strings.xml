@@ -165,4 +165,5 @@
     <string name="SPEEDING_WATCHWORD">Zwolnij!</string>
     <string name="OVER_HOURS_WATCHWORD">Uwaga!</string>
     <string name="OVER_HOURS">Pojazd porusza się poza określonymi godzinami pracy</string>
+    <string name="my_fleet_nfc">Przypisywanie NFC tagu</string>
 </resources>

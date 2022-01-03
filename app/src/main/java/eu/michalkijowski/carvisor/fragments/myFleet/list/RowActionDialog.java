@@ -51,6 +51,11 @@ public class RowActionDialog extends DialogFragment {
                         else if (which==2) {
                             // pokaż na mapie
                         }
+                        else if (which==3) {
+                            bundle.putInt("id", Integer.valueOf(tag));
+                            NavHostFragment.findNavController(fragment)
+                                    .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet_nfc_tag,bundle);
+                        }
                     }
                 });
         return builder.create();

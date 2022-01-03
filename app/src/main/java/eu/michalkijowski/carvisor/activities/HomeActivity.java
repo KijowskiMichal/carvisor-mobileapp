@@ -2,10 +2,13 @@ package eu.michalkijowski.carvisor.activities;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +49,10 @@ public class HomeActivity extends AppCompatActivity {
     NotificationManager notificationManager;
     int idPopup = 0;
     int ID_POPUP_OFFSET = 1876;
+    public static ArrayList<String> listOfFindedNFC = new ArrayList<>();
+
+    public static NfcAdapter mAdapter;
+    public static PendingIntent mPendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,50 @@ public class HomeActivity extends AppCompatActivity {
                 });
             }
         }, 0, 5000);
+
+        mAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (mAdapter == null) {
+            //nfc not support your device.
+            return;
+        }
+        mPendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
+                getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        disableNfcSearching();
+    }
+
+    public void enableNfcSearching() {
+        mAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
+    }
+
+    public void disableNfcSearching() {
+        if (mAdapter != null) {
+            mAdapter.disableForegroundDispatch(this);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        getTagInfo(intent);
+    }
+
+    private void getTagInfo(Intent intent) {
+        byte[] tagId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+        String hexdump = new String();
+        for (int i = 0; i < tagId.length; i++) {
+            String x = Integer.toHexString(((int) tagId[i] & 0xff));
+            if (x.length() == 1) {
+                x = '0' + x;
+            }
+            hexdump += x;
+        }
+        listOfFindedNFC.add(hexdump);
     }
 
     @Override

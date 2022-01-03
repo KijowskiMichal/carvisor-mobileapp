@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import eu.michalkijowski.carvisor.activities.MainActivity;
+import eu.michalkijowski.carvisor.data_models.NfcTagDTO;
 import eu.michalkijowski.carvisor.data_models.UserAddDTO;
 import eu.michalkijowski.carvisor.data_models.UserDataDTO;
 import eu.michalkijowski.carvisor.data_models.UserPasswordDTO;
@@ -114,6 +115,18 @@ public class UsersService {
             Call call = MainActivity.defaultHttpClient.newCall(request);
             Response response = call.execute();
             System.out.println(response.code());
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setNfcTag(NfcTagDTO nfcTagDTO, int id) {
+        Gson gson = new Gson();
+        try {
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(nfcTagDTO));
+            Request request = new Request.Builder().url(MainActivity.BaseURL+"/API/users/changeUserNfcTag/"+id+"/").post(body).build();
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            call.execute();
         } catch (IOException | SecurityException e) {
             e.printStackTrace();
         }
