@@ -10,6 +10,7 @@ public class MapDeviceRowDTO {
     private double gpsY;
     private String vehicle;
     private String user;
+    private boolean privateTrack;
 
     public int getThrottle() {
         return throttle;
@@ -81,5 +82,13 @@ public class MapDeviceRowDTO {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public boolean isPrivateTrack() {
+        return privateTrack;
+    }
+
+    public void setPrivateTrack(boolean privateTrack) {
+        this.privateTrack = privateTrack;
     }
 }

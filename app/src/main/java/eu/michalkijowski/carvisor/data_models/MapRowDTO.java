@@ -8,6 +8,7 @@ public class MapRowDTO {
     private int rpm;
     private int speed;
     private double gpsY;
+    private boolean privateTrack;
 
     public int getThrottle() {
         return throttle;
@@ -63,5 +64,13 @@ public class MapRowDTO {
 
     public void setGpsY(double gpsY) {
         this.gpsY = gpsY;
+    }
+
+    public boolean isPrivateTrack() {
+        return privateTrack;
+    }
+
+    public void setPrivateTrack(boolean privateTrack) {
+        this.privateTrack = privateTrack;
     }
 }
