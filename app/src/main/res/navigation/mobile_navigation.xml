@@ -193,7 +193,7 @@
 
     <fragment
         android:id="@+id/nav_calendar"
-        android:name="eu.michalkijowski.carvisor.fragments.calendar.CalendarFragment"
+        android:name="eu.michalkijowski.carvisor.fragments.calendar.list.CalendarFragment"
         android:label="@string/calendar"
         tools:layout="@layout/fragment_calendar" >
         <action

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="15dp"
     android:paddingVertical="15dp"
-    tools:context=".fragments.calendar.CalendarFragment"
+    tools:context=".fragments.calendar.list.CalendarFragment"
     tools:ignore="SpeakableTextPresentCheck">
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 app:type="one_day_picker"
                 app:eventsEnabled="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:headerColor="@color/colorAccent" />
         </LinearLayout>
 
@@ -57,5 +57,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"></LinearLayout>
         </LinearLayout>
+
+        <ListView
+            android:id="@+id/myFleetListView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+
+        </ListView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

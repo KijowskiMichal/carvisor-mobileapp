@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="calendar_row_action">
+        <item>Edytuj zdarzenie</item>
+        <item>Usuń zdarzenie</item>
+    </string-array>
     <string-array name="my_fleet_list_row_action">
         <item>Edytuj użytkownika</item>
         <item>Usuń użytkownika</item>

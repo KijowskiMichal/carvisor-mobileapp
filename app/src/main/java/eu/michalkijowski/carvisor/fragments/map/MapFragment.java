@@ -237,38 +237,39 @@ public class MapFragment extends Fragment {
                         /*********************
                          * Pokaż na mapie
                          ********************/
-                        System.out.println("pokaznamapie");
                         Bundle bundle = getArguments();
-                        if (bundle.getInt("mapUserID", -1)!=-1) {
-                            personChoose = true;
-                            MapFragment.selectedId = bundle.getInt("mapUserID");
-                        }
-                        else if (bundle.getInt("mapDeviceID", -1)!=-1) {
-                            personChoose = false;
-                            MapFragment.selectedId = bundle.getInt("mapDeviceID");
-                        }
-                        if (personChoose) {
-                            ((TextView)getView().findViewById(R.id.textView20)).setText("Wybierz kierowcę");
-                            ((ImageView)getView().findViewById(R.id.imageView4)).setImageResource(R.drawable.tab2);
-                            final UserNamesDTO[] userNamesDTOS = MapService.getUserList("$");
-                            for (UserNamesDTO userNamesDTO : userNamesDTOS) {
-                                if (userNamesDTO.getId()==MapFragment.selectedId) {
-                                    MapFragment.selectedName =userNamesDTO.getName();
+                        if (bundle!=null) {
+                            if (bundle.getInt("mapUserID", -1)!=-1) {
+                                personChoose = true;
+                                MapFragment.selectedId = bundle.getInt("mapUserID");
+                            }
+                            else if (bundle.getInt("mapDeviceID", -1)!=-1) {
+                                personChoose = false;
+                                MapFragment.selectedId = bundle.getInt("mapDeviceID");
+                            }
+                            if (personChoose) {
+                                ((TextView)getView().findViewById(R.id.textView20)).setText("Wybierz kierowcę");
+                                ((ImageView)getView().findViewById(R.id.imageView4)).setImageResource(R.drawable.tab2);
+                                final UserNamesDTO[] userNamesDTOS = MapService.getUserList("$");
+                                for (UserNamesDTO userNamesDTO : userNamesDTOS) {
+                                    if (userNamesDTO.getId()==MapFragment.selectedId) {
+                                        MapFragment.selectedName =userNamesDTO.getName();
+                                    }
                                 }
                             }
-                        }
-                        else {
-                            ((TextView)getView().findViewById(R.id.textView20)).setText("Wybierz pojazd");
-                            ((ImageView)getView().findViewById(R.id.imageView4)).setImageResource(R.drawable.tab);
-                            final DeviceNamesDTO[] deviceNamesDTOS = MapService.getDeviceList("$");
-                            for (DeviceNamesDTO deviceNamesDTO : deviceNamesDTOS) {
-                                if (deviceNamesDTO.getId()==MapFragment.selectedId) {
-                                    MapFragment.selectedName =deviceNamesDTO.getName();
+                            else {
+                                ((TextView)getView().findViewById(R.id.textView20)).setText("Wybierz pojazd");
+                                ((ImageView)getView().findViewById(R.id.imageView4)).setImageResource(R.drawable.tab);
+                                final DeviceNamesDTO[] deviceNamesDTOS = MapService.getDeviceList("$");
+                                for (DeviceNamesDTO deviceNamesDTO : deviceNamesDTOS) {
+                                    if (deviceNamesDTO.getId()==MapFragment.selectedId) {
+                                        MapFragment.selectedName =deviceNamesDTO.getName();
+                                    }
                                 }
                             }
+                            selectForm.setText(MapFragment.selectedName);
+                            new UpdateMap().execute();
                         }
-                        selectForm.setText(MapFragment.selectedName);
-                        new UpdateMap().execute();
                     }
                 });
                 }
