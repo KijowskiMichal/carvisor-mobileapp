@@ -48,6 +48,7 @@ import eu.michalkijowski.carvisor.activities.HomeActivity;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
 import eu.michalkijowski.carvisor.fragments.myFleet.add.MyFleetAddFragment;
 import eu.michalkijowski.carvisor.fragments.settings.SettingsFragment;
+import eu.michalkijowski.carvisor.services.AuthorizationService;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.UsersService;
 
@@ -114,7 +115,14 @@ public class MyFleetListFragment extends Fragment {
     @Override
     public void onAttach(final Activity activity) {
         super.onAttach(activity);
-        new DownloadDataForList().execute();
+        if (AuthorizationService.authorizationStatus.getRbac().equals("STANDARD_USER")) {
+            Bundle bundle = new Bundle();
+            NavHostFragment.findNavController(MyFleetListFragment.this)
+                    .navigate(R.id.action_nav_my_fleet_to_nav_summary,bundle);
+        }
+        else {
+            new DownloadDataForList().execute();
+        }
     }
 
 

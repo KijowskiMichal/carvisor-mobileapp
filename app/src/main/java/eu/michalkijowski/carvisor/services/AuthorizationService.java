@@ -24,6 +24,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class AuthorizationService {
+    public static AuthorizationStatusDTO authorizationStatus;
+
     public static boolean authorizeUser(AuthorizationDTO authorizationDTO) {
         Gson gson = new Gson();
         try {

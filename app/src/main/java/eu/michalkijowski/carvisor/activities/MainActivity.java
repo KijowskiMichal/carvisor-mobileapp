@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.editTextTextPersonName2);
         if (AuthorizationService.authorizeUser(new AuthorizationDTO(login.getText().toString(), password.getText().toString())))
         {
+            AuthorizationService.authorizationStatus = AuthorizationService.getAuthorizationStatus();
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
         }

@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,10 +71,29 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        switch (AuthorizationService.authorizationStatus.getRbac()) {
+            case "ADMINISTRATOR":
+                break;
+            case "MODERATOR":
+                break;
+            case "STANDARD_USER":
+                nav_Menu.findItem(R.id.nav_my_fleet).setVisible(false);
+                nav_Menu.findItem(R.id.nav_devices).setVisible(false);
+                nav_Menu.findItem(R.id.nav_map).setVisible(false);
+                nav_Menu.findItem(R.id.nav_notification).setVisible(false);
+                nav_Menu.findItem(R.id.nav_errors).setVisible(false);
+                nav_Menu.findItem(R.id.nav_ecopoints).setVisible(false);
+                nav_Menu.findItem(R.id.nav_safetypoints).setVisible(false);
+                nav_Menu.findItem(R.id.nav_reports).setVisible(false);
+                nav_Menu.findItem(R.id.nav_calendar).setVisible(false);
+                ((ImageButton) findViewById(R.id.imageButton)).setVisibility(View.GONE);
+                break;
+        }
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_my_fleet, R.id.nav_devices, R.id.nav_settings, R.id.nav_ecopoints, R.id.nav_safetypoints, R.id.nav_reports, R.id.nav_map, R.id.nav_calendar, R.id.nav_errors, R.id.nav_notification)
+                R.id.nav_my_fleet, R.id.nav_devices, R.id.nav_settings, R.id.nav_ecopoints, R.id.nav_safetypoints, R.id.nav_reports, R.id.nav_map, R.id.nav_calendar, R.id.nav_errors, R.id.nav_notification, R.id.nav_summary)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

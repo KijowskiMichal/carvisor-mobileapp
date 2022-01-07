@@ -41,7 +41,7 @@
                 android:hint="Login"
                 android:inputType="textPersonName"
                 android:paddingVertical="15dp"
-                android:text="admin"
+                android:text="zenek"
                 android:textColor="#474747" />
 
             <EditText
@@ -56,7 +56,7 @@
                 android:hint="Hasło"
                 android:inputType="textPassword"
                 android:paddingVertical="15dp"
-                android:text="absx"
+                android:text="xsba"
                 android:textColor="#474747" />
 
             <TextView

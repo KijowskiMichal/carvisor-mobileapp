@@ -244,7 +244,7 @@ public class DevicesAddFragment extends Fragment {
             super.onPostExecute(bool);
             if (bool) {
                 try {
-                    /*RegisterDTO registerDTO = new RegisterDTO();
+                    RegisterDTO registerDTO = new RegisterDTO();
                     registerDTO.setAddress(MainActivity.BaseURL);
                     registerDTO.setLicensePlate(licensePlate);
                     registerDTO.setPassword(password);
@@ -264,7 +264,7 @@ public class DevicesAddFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                    mmOutputStream.close();*/
+                    mmOutputStream.close();
                     mProgressDialog.dismiss();
                     Toast.makeText(getContext(), "Poprawnie dodano pojazd.", Toast.LENGTH_LONG).show();
                     Bundle bundle = new Bundle();
