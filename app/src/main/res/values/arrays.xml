@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="calendar_row_action">
-        <item>Edytuj zdarzenie</item>
-        <item>Usuń zdarzenie</item>
+        <item>Podgląd wydarzenia</item>
+        <item>Edytuj wydarzenie</item>
+        <item>Usuń wydarzenie</item>
     </string-array>
     <string-array name="my_fleet_list_row_action">
         <item>Edytuj użytkownika</item>
@@ -50,5 +51,10 @@
         <item>Raport tras</item>
         <item>Raport ekojazdy</item>
         <item>Raport bezpieczeństwa</item>
+    </string-array>
+    <string-array name="typeOfEvent">
+        <item>Serwis pojazdu</item>
+        <item>Sprzątanie pojazdu</item>
+        <item>Inne</item>
     </string-array>
 </resources>

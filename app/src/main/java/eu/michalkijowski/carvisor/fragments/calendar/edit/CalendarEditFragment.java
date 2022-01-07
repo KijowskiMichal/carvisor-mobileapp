@@ -1,15 +1,9 @@
-package eu.michalkijowski.carvisor.fragments.calendar.add;
+package eu.michalkijowski.carvisor.fragments.calendar.edit;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Base64;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +14,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,29 +22,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.TimeZone;
 
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.converters.EventTypeConverter;
 import eu.michalkijowski.carvisor.data_models.DeviceNamesDTO;
 import eu.michalkijowski.carvisor.data_models.EventAddDTO;
-import eu.michalkijowski.carvisor.data_models.UserAddDTO;
-import eu.michalkijowski.carvisor.data_models.UserDTO;
+import eu.michalkijowski.carvisor.data_models.EventDTO;
+import eu.michalkijowski.carvisor.data_models.EventEditDTO;
 import eu.michalkijowski.carvisor.services.CalendarService;
-import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.MapService;
-import eu.michalkijowski.carvisor.services.UsersService;
 
-public class CalendarAddFragment extends Fragment {
+public class CalendarEditFragment extends Fragment {
     ImageView imageView;
     String image;
     private ProgressDialog mProgressDialog;
@@ -75,8 +61,10 @@ public class CalendarAddFragment extends Fragment {
         super.onCreateOptionsMenu(menu,inflater);
     }
 
-    public EventAddDTO register(View view) {
+    public EventEditDTO register(View view) {
         try {
+            Bundle bundle = getArguments();
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -94,18 +82,18 @@ public class CalendarAddFragment extends Fragment {
             if (dateTo.equals("")) return null;
             if (type.equals("")) return null;
 
-            EventAddDTO eventAddDTO = new EventAddDTO();
-            eventAddDTO.setTitle(title);
-            eventAddDTO.setDescription(description);
-            eventAddDTO.setStart(atStartOfDay(dateFrom).getTime()/1000);
-            eventAddDTO.setEnd(atEndOfDay(dateTo).getTime()/1000);
-            eventAddDTO.setType(type);
-            eventAddDTO.setDevice(device);
-            eventAddDTO.setRemind(remind);
+            EventEditDTO eventEditDTO = new EventEditDTO();
+            eventEditDTO.setTitle(title);
+            eventEditDTO.setDescription(description);
+            eventEditDTO.setStart(atStartOfDay(dateFrom).getTime()/1000);
+            eventEditDTO.setEnd(atEndOfDay(dateTo).getTime()/1000);
+            eventEditDTO.setType(type);
+            eventEditDTO.setDevice(device);
+            eventEditDTO.setRemind(remind);
+            eventEditDTO.setDraggable(true);
+            eventEditDTO.setId(bundle.getInt("id"));
 
-            System.out.println(remind);
-
-            return eventAddDTO;
+            return eventEditDTO;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -115,14 +103,14 @@ public class CalendarAddFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View root = inflater.inflate(R.layout.fragment_calendar_add, container, false);
+        View root = inflater.inflate(R.layout.fragment_calendar_edit, container, false);
         Button registerButton = root.findViewById(R.id.button2);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventAddDTO eventAddDTO = register(view);
-                if (eventAddDTO!=null) {
-                    new PostNewEvent().execute(eventAddDTO);
+                EventEditDTO eventEditDTO = register(view);
+                if (eventEditDTO!=null) {
+                    new UpdateEvent().execute(eventEditDTO);
                 }
                 else {
                     Toast.makeText(getContext(), "Nie wszystkie pola wypełniono poprawnie.", Toast.LENGTH_LONG).show();
@@ -133,8 +121,8 @@ public class CalendarAddFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(CalendarAddFragment.this)
-                        .navigate(R.id.action_nav_calendar_add_to_nav_calendar,bundle);
+                NavHostFragment.findNavController(CalendarEditFragment.this)
+                        .navigate(R.id.action_nav_calendar_edit_to_nav_calendar,bundle);
             }
         });
         /********************************
@@ -164,10 +152,11 @@ public class CalendarAddFragment extends Fragment {
         return root;
     }
 
-    private class PostNewEvent extends AsyncTask<EventAddDTO, Void, Boolean> {
+    private class UpdateEvent extends AsyncTask<EventEditDTO, Void, Boolean> {
         @Override
-        protected Boolean doInBackground(EventAddDTO... eventAddDTOS) {
-            return CalendarService.addEvent(eventAddDTOS[0]);
+        protected Boolean doInBackground(EventEditDTO... eventEditDTOS) {
+            Bundle bundle = getArguments();
+            return CalendarService.editEvent(eventEditDTOS[0], bundle.getInt("id"));
         }
 
         @Override
@@ -181,10 +170,10 @@ public class CalendarAddFragment extends Fragment {
             super.onPostExecute(bool);
             mProgressDialog.dismiss();
             if (bool) {
-                Toast.makeText(getContext(), "Poprawnie dodano zdarzenie.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Poprawnie zedytowano zdarzenie.", Toast.LENGTH_LONG).show();
                 Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(CalendarAddFragment.this)
-                        .navigate(R.id.action_nav_calendar_add_to_nav_calendar,bundle);
+                NavHostFragment.findNavController(CalendarEditFragment.this)
+                        .navigate(R.id.action_nav_calendar_edit_to_nav_calendar,bundle);
             }
             else {
                 Toast.makeText(getContext(), "Coś poszło nie tak.", Toast.LENGTH_LONG).show();
@@ -192,13 +181,21 @@ public class CalendarAddFragment extends Fragment {
         }
     }
 
-    private class GetDevices extends AsyncTask<Void, Void, ArrayAdapter> {
+    private class GetDevices extends AsyncTask<Void, Void, Pair<ArrayAdapter, EventDTO>> {
         @Override
-        protected ArrayAdapter doInBackground(Void... voids) {
+        protected Pair<ArrayAdapter, EventDTO> doInBackground(Void... voids) {
+            /********************************
+             * Device list refill
+             *******************************/
             deviceNamesDTOS = MapService.getDeviceList("");
             ArrayAdapter deviceAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, (String[]) Arrays.stream(deviceNamesDTOS).map(x -> x.getName()).toArray(String[]::new));
             deviceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            return deviceAdapter;
+            /********************************
+             * refill fields from API
+             *******************************/
+            Bundle bundle = getArguments();
+            EventDTO eventDTO = CalendarService.getEvent(bundle.getInt("id"));
+            return new Pair<>(deviceAdapter, eventDTO);
         }
 
         @Override
@@ -208,9 +205,23 @@ public class CalendarAddFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(ArrayAdapter arrayAdapter) {
-            super.onPostExecute(arrayAdapter);
-            device.setAdapter(arrayAdapter);
+        protected void onPostExecute(Pair<ArrayAdapter, EventDTO> pair) {
+            super.onPostExecute(pair);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            device.setAdapter(pair.first);
+            title.setText(pair.second.getTitle());
+            description.setText(pair.second.getDescription());
+            dateFrom.setText(dateFormat.format(new Date(pair.second.getStart()*1000)));
+            dateTo.setText(dateFormat.format(new Date(pair.second.getEnd()*1000)));
+            type.setSelection(EventTypeConverter.getPositionFromType(pair.second.getType()));
+            int postion = 0;
+            for (DeviceNamesDTO deviceNamesDTO : deviceNamesDTOS) {
+                if (deviceNamesDTO.getId() == pair.second.getDevice()) {
+                    device.setSelection(postion);
+                }
+                postion++;
+            }
+            remind.setChecked(pair.second.isRemind());
             mProgressDialog.dismiss();
         }
     }

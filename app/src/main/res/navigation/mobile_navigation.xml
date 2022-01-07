@@ -203,7 +203,70 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_calendar_to_nav_calendar_add"
+            app:destination="@id/nav_calendar_add"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_calendar_to_nav_calendar_edit"
+            app:destination="@id/nav_calendar_edit"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_calendar_to_nav_calendar_preview"
+            app:destination="@id/nav_calendar_preview"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
+                <fragment
+                    android:id="@+id/nav_calendar_add"
+                    android:name="eu.michalkijowski.carvisor.fragments.calendar.add.CalendarAddFragment"
+                    android:label="@string/calendar_add"
+                    tools:layout="@layout/fragment_calendar_add" >
+                    <action
+                        android:id="@+id/action_nav_calendar_add_to_nav_calendar"
+                        app:destination="@id/nav_calendar"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+                <fragment
+                    android:id="@+id/nav_calendar_edit"
+                    android:name="eu.michalkijowski.carvisor.fragments.calendar.edit.CalendarEditFragment"
+                    android:label="@string/calendar_edit"
+                    tools:layout="@layout/fragment_calendar_edit" >
+                    <action
+                        android:id="@+id/action_nav_calendar_edit_to_nav_calendar"
+                        app:destination="@id/nav_calendar"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+                <fragment
+                    android:id="@+id/nav_calendar_preview"
+                    android:name="eu.michalkijowski.carvisor.fragments.calendar.preview.CalendarPreviewFragment"
+                    android:label="@string/calendar_preview"
+                    tools:layout="@layout/fragment_calendar_preview" >
+                    <action
+                        android:id="@+id/action_nav_calendar_preview_to_nav_calendar"
+                        app:destination="@id/nav_calendar"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
 
     <fragment
         android:id="@+id/nav_ecopoints"

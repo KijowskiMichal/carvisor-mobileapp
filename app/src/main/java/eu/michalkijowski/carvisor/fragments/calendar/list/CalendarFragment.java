@@ -2,6 +2,7 @@ package eu.michalkijowski.carvisor.fragments.calendar.list;
 
 import android.app.ProgressDialog;
 import android.graphics.drawable.Drawable;
+import android.icu.util.TimeZone;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -28,16 +29,19 @@ import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnCalendarPageChangeListener;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.EventDTO;
 import eu.michalkijowski.carvisor.data_models.UserPasswordDTO;
+import eu.michalkijowski.carvisor.fragments.myFleet.list.MyFleetListFragment;
 import eu.michalkijowski.carvisor.services.CalendarService;
 import eu.michalkijowski.carvisor.services.UsersService;
 
@@ -65,6 +69,18 @@ public class CalendarFragment extends Fragment {
         setHasOptionsMenu(true);
         View root = inflater.inflate(R.layout.fragment_calendar, container, false);
         listView = (ListView) root.findViewById(R.id.myFleetListView);
+        /********************************
+         * Floating action button
+         *******************************/
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                NavHostFragment.findNavController(CalendarFragment.this)
+                        .navigate(R.id.action_nav_calendar_to_nav_calendar_add,bundle);
+            }
+        });
         /************************
          * ustawienia kalendarza
          ***********************/
@@ -206,9 +222,18 @@ public class CalendarFragment extends Fragment {
             }
             List<EventDay> events = new ArrayList<>();
             for (EventDTO eventDTO : eventDTOS) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(eventDTO.getStart()*1000);
-                events.add(new EventDay(calendar, R.drawable.circle));
+                Calendar startCalendar = Calendar.getInstance();
+                startCalendar.setTimeInMillis(eventDTO.getStart()*1000);
+                events.add(new EventDay(startCalendar, R.drawable.circle));
+                long start = startCalendar.getTimeInMillis();
+                while (atStartOfNextDay(new Date(start)).getTime()/1000 < eventDTO.getEnd()) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(atStartOfNextDay(new Date(start)));
+                    events.add(new EventDay(calendar, R.drawable.circle));
+                    System.out.println(start+" "+calendar.getTimeInMillis());
+                    start = calendar.getTimeInMillis();
+                    System.out.println(start);
+                }
             }
             return events;
         }
@@ -233,26 +258,26 @@ public class CalendarFragment extends Fragment {
         }
     }
 
-    private class EditUserPassword extends AsyncTask<UserPasswordDTO, Void, Void> {
-        @Override
-        protected Void doInBackground(UserPasswordDTO... userDataDTO) {
-            UsersService.editUserPassword(userDataDTO[0]);
-            return null;
+    public Date atStartOfNextDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        if (calendar.getActualMaximum(Calendar.DAY_OF_MONTH)==calendar.get(Calendar.DAY_OF_MONTH)) {
+            if (calendar.get(Calendar.MONTH)==11) {
+                calendar.set(Calendar.MONTH, 0);
+                calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR)+1);
+            }
+            else {
+                calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH)+1);
+            }
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
         }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.loading), true, false);
+        else {
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH)+1);
         }
-
-        @Override
-        protected void onPostExecute(Void param) {
-            super.onPostExecute(param);
-            mProgressDialog.dismiss();
-            ((EditText)getView().findViewById(R.id.editTextTextPersonName5)).setText("");
-            ((EditText)getView().findViewById(R.id.editTextTextPersonName6)).setText("");
-            Toast.makeText(getContext(), "Poprawnie zedytowano hasło.", Toast.LENGTH_LONG).show();
-        }
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
     }
 }

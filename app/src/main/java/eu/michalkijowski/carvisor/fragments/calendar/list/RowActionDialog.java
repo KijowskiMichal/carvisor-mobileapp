@@ -43,9 +43,14 @@ public class RowActionDialog extends DialogFragment {
                         if (which==0) {
                             bundle.putInt("id", Integer.valueOf(tag));
                             NavHostFragment.findNavController(fragment)
-                                    .navigate(R.id.action_nav_devices_to_nav_devices_edit,bundle);
+                                    .navigate(R.id.action_nav_calendar_to_nav_calendar_preview,bundle);
                         }
-                        else if (which==1) {
+                        if (which==1) {
+                            bundle.putInt("id", Integer.valueOf(tag));
+                            NavHostFragment.findNavController(fragment)
+                                    .navigate(R.id.action_nav_calendar_to_nav_calendar_edit,bundle);
+                        }
+                        else if (which==2) {
                             new RowDeleteDialog().show(manager, tag, name, fragment, context);
                         }
                     }
