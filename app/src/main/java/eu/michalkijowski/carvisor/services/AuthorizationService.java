@@ -14,6 +14,8 @@ import eu.michalkijowski.carvisor.ConnectWithDeviceToAdd;
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.activities.MainActivity;
 import eu.michalkijowski.carvisor.data_models.AuthorizationDTO;
+import eu.michalkijowski.carvisor.data_models.AuthorizationStatusDTO;
+import eu.michalkijowski.carvisor.data_models.EventDTO;
 import eu.michalkijowski.carvisor.data_models.UserDataDTO;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -50,5 +52,36 @@ public class AuthorizationService {
         } catch (IOException | SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    public static AuthorizationStatusDTO getAuthorizationStatus() {
+        try {
+            Request request = new Request.Builder()
+                    .url(MainActivity.BaseURL + "/API/authorization/status/")
+                    .build();
+
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            AuthorizationStatusDTO authorizationStatusDTO = new Gson().fromJson(response.body().string(), AuthorizationStatusDTO.class);
+            return  authorizationStatusDTO;
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean connectionTest(String link) {
+        try {
+            Request request = new Request.Builder()
+                    .url(link + "/API/authorization/status/")
+                    .build();
+
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            return  response.code()==200;
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -30,10 +31,11 @@ import okhttp3.internal.JavaNetCookieJar;
 import eu.michalkijowski.carvisor.services.utils.ResponseInterceptor;
 
 public class MainActivity extends AppCompatActivity {
-    public static String BaseURL = "https://carvisor.pl";
+    public static String BaseURL;
     public static CookieManager cookieManager;
     public static OkHttpClient defaultHttpClient;
     public static boolean firstUse = true;
+    public static SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
         if (MainActivity.firstUse) {
             requestPermissions(new String[] { Manifest.permission.WRITE_SETTINGS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.CHANGE_WIFI_STATE, Manifest.permission.INTERNET }, 1);
             MainActivity.firstUse = false;
+        }
+        if (sharedPref==null) {
+            sharedPref = getSharedPreferences("carvisor", MODE_PRIVATE);
+            if (sharedPref.getString("BASEURL", "EMPTY").equals("EMPTY")) {
+                Intent intent = new Intent(getApplicationContext(), ServerChooseActivity.class);
+                startActivity(intent);
+            }
+            else {
+                BaseURL = sharedPref.getString("BASEURL", null);
+            }
         }
     }
 

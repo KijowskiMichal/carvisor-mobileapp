@@ -10,13 +10,24 @@
         <entry key="app/src/main/res/drawable/ic_photo_add_background.xml" value="0.39166666666666666" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.20426829268292682" />
+        <entry key="app/src/main/res/layout/activity_server_choose.xml" value="0.3677536231884058" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.33106884057971014" />
+        <entry key="app/src/main/res/layout/fragment_calendar.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_calendar_add.xml" value="0.37228260869565216" />
+        <entry key="app/src/main/res/layout/fragment_calendar_edit.xml" value="0.37228260869565216" />
+        <entry key="app/src/main/res/layout/fragment_calendar_preview.xml" value="0.3677536231884058" />
+        <entry key="app/src/main/res/layout/fragment_devices_add_bluetooth_list.xml" value="0.37228260869565216" />
+        <entry key="app/src/main/res/layout/fragment_devices_list.xml" value="0.2109375" />
+        <entry key="app/src/main/res/layout/fragment_devices_list_row.xml" value="0.37228260869565216" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/fragment_my_fleet_add.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/fragment_my_fleet_edit.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/fragment_my_fleet_list.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/fragment_my_fleet_list_row.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_reports_add_page_one.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_reports_add_page_two.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_reports_add_page_zero.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.32563405797101447" />
         <entry key="app/src/main/res/layout/fragment_slideshow.xml" value="0.33106884057971014" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.33106884057971014" />
