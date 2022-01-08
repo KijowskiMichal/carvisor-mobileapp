@@ -318,6 +318,20 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_zones"
+        android:name="eu.michalkijowski.carvisor.fragments.zones.list.ZoneListFragment"
+        android:label="@string/zones"
+        tools:layout="@layout/fragment_zones_list" >
+        <action
+            android:id="@+id/action_nav_zones_to_nav_zones"
+            app:destination="@id/nav_zones"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_map"
         android:name="eu.michalkijowski.carvisor.fragments.map.MapFragment"
         android:label="@string/map"

@@ -5,6 +5,11 @@
         <item>Edytuj wydarzenie</item>
         <item>Usuń wydarzenie</item>
     </string-array>
+    <string-array name="zones_row_action">
+        <item>Podgląd strefy</item>
+        <item>Edytuj strefę</item>
+        <item>Usuń strefę</item>
+    </string-array>
     <string-array name="my_fleet_list_row_action">
         <item>Edytuj użytkownika</item>
         <item>Usuń użytkownika</item>
