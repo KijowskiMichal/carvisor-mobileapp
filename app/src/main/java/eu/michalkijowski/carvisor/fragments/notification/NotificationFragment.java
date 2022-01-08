@@ -32,6 +32,7 @@ import eu.michalkijowski.carvisor.data_models.ErrorDTO;
 import eu.michalkijowski.carvisor.data_models.ErrorsDTO;
 import eu.michalkijowski.carvisor.data_models.NotificationDTO;
 import eu.michalkijowski.carvisor.data_models.NotificationsDTO;
+import eu.michalkijowski.carvisor.services.AuthorizationService;
 import eu.michalkijowski.carvisor.services.ErrorsService;
 import eu.michalkijowski.carvisor.services.NotificationService;
 import eu.michalkijowski.carvisor.services.ReverseGeocodingService;
@@ -86,7 +87,14 @@ public class NotificationFragment extends Fragment {
              * ListView
              *******************************/
             SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-            NotificationsDTO notificationsDTO = NotificationService.getNotifications(timestampFrom, timestampTo);
+            NotificationsDTO notificationsDTO;
+            if (AuthorizationService.authorizationStatus.getRbac().equals("STANDARD_USER")) {
+                notificationsDTO = NotificationService.getNotificationsForCurrentUser(timestampFrom, timestampTo);
+                System.out.println(notificationsDTO.getListOfNotification().length);
+            }
+            else {
+                notificationsDTO = NotificationService.getNotifications(timestampFrom, timestampTo);
+            }
             List<HashMap<String, String>> list = new ArrayList<>();
             for (NotificationDTO notificationDTO : notificationsDTO.getListOfNotification()) {
                 HashMap item = new HashMap<String, String>();

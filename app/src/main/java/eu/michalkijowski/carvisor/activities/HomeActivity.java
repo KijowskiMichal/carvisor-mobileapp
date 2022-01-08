@@ -83,8 +83,6 @@ public class HomeActivity extends AppCompatActivity {
                 nav_Menu.findItem(R.id.nav_my_fleet).setVisible(false);
                 nav_Menu.findItem(R.id.nav_devices).setVisible(false);
                 nav_Menu.findItem(R.id.nav_map).setVisible(false);
-                nav_Menu.findItem(R.id.nav_notification).setVisible(false);
-                nav_Menu.findItem(R.id.nav_errors).setVisible(false);
                 nav_Menu.findItem(R.id.nav_ecopoints).setVisible(false);
                 nav_Menu.findItem(R.id.nav_safetypoints).setVisible(false);
                 nav_Menu.findItem(R.id.nav_reports).setVisible(false);

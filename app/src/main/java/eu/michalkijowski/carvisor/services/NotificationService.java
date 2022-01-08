@@ -21,8 +21,22 @@ public class NotificationService {
     public static NotificationsDTO getNotifications(long timestampFrom, long timestampTo) {
         try {
             Request request = new Request.Builder()
-                .url(MainActivity.BaseURL + "/API/notification/getNotification/"+timestampFrom+"/"+timestampTo+"/1/10000/")
-                .build();
+                    .url(MainActivity.BaseURL + "/API/notification/getNotification/"+timestampFrom+"/"+timestampTo+"/1/10000/")
+                    .build();
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            NotificationsDTO notificationsDTO = new Gson().fromJson(response.body().string(), NotificationsDTO.class);
+            return  notificationsDTO;
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static NotificationsDTO getNotificationsForCurrentUser(long timestampFrom, long timestampTo) {
+        try {
+            Request request = new Request.Builder()
+                    .url(MainActivity.BaseURL + "/API/notification/getNotificationOfCurrentUser/"+timestampFrom+"/"+timestampTo+"/1/10000/")
+                    .build();
             Call call = MainActivity.defaultHttpClient.newCall(request);
             Response response = call.execute();
             NotificationsDTO notificationsDTO = new Gson().fromJson(response.body().string(), NotificationsDTO.class);
