@@ -388,7 +388,7 @@ public class MapFragment extends Fragment {
                         marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.green));
                         marker.setPosition(startPoint);
                         marker.setAnchor(Marker.ANCHOR_RIGHT, Marker.ANCHOR_BOTTOM);
-                        marker.setTitle("Początek trasy\n"+(mapDeviceRowDTO.isPrivateTrack() ? "Trasa prywatna" : "Trasa publiczna")+"\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                        marker.setTitle("Początek trasy\n"+(mapDeviceRowDTO.isPrivateTrack() ? "Trasa prywatna" : "Trasa firmowa")+"\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
                         map.getOverlays().add(marker);
                     }
                     for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getEndPoints()) {
@@ -397,7 +397,7 @@ public class MapFragment extends Fragment {
                         marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.red));
                         marker.setPosition(startPoint);
                         marker.setAnchor(Marker.ANCHOR_LEFT, Marker.ANCHOR_BOTTOM);
-                        marker.setTitle("Koniec trasy\n"+(mapDeviceRowDTO.isPrivateTrack() ? "Trasa prywatna" : "Trasa publiczna")+"\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                        marker.setTitle("Koniec trasy\n"+(mapDeviceRowDTO.isPrivateTrack() ? "Trasa prywatna" : "Trasa firmowa")+"\nPojazd: "+mapDeviceRowDTO.getVehicle()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
                         map.getOverlays().add(marker);
                     }
                 }
@@ -408,7 +408,7 @@ public class MapFragment extends Fragment {
                         marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.green));
                         marker.setPosition(startPoint);
                         marker.setAnchor(Marker.ANCHOR_RIGHT, Marker.ANCHOR_BOTTOM);
-                        marker.setTitle("Początek trasy\n"+(mapDeviceRowDTO.isPrivateTrack() ? "Trasa prywatna" : "Trasa publiczna")+"\nKierowca: "+mapDeviceRowDTO.getUser()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                        marker.setTitle("Początek trasy\n"+(mapDeviceRowDTO.isPrivateTrack() ? "Trasa prywatna" : "Trasa firmowa")+"\nKierowca: "+mapDeviceRowDTO.getUser()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
                         map.getOverlays().add(marker);
                     }
                     for (MapDeviceRowDTO mapDeviceRowDTO : mapWrapperDTO.getEndPoints()) {
@@ -417,7 +417,7 @@ public class MapFragment extends Fragment {
                         marker.setIcon(ContextCompat.getDrawable(getContext(), R.mipmap.red));
                         marker.setPosition(startPoint);
                         marker.setAnchor(Marker.ANCHOR_LEFT, Marker.ANCHOR_BOTTOM);
-                        marker.setTitle("Koniec trasy\n"+(mapDeviceRowDTO.isPrivateTrack() ? "Trasa prywatna" : "Trasa publiczna")+"\nKierowca: "+mapDeviceRowDTO.getUser()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
+                        marker.setTitle("Koniec trasy\n"+(mapDeviceRowDTO.isPrivateTrack() ? "Trasa prywatna" : "Trasa firmowa")+"\nKierowca: "+mapDeviceRowDTO.getUser()+"\nObroty: "+mapDeviceRowDTO.getRpm()+"\nPrędkość: "+mapDeviceRowDTO.getSpeed()+"km/h \nCzas: "+(new SimpleDateFormat("hh:mm").format(new Date(mapDeviceRowDTO.getTime()))));
                         map.getOverlays().add(marker);
                     }
                 }

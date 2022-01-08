@@ -285,7 +285,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="12" />
-                            <option name="y" value="368" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -332,6 +332,11 @@
                               </value>
                             </entry>
                             <entry key="action_nav_my_fleet_to_nav_my_fleet_nfc_tag">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_nav_my_fleet_to_nav_summary">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -608,7 +613,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_nav_ecopoints_to_nav_ecopoints">
+                            <entry key="action_nav_summary_to_nav_summary">
                               <value>
                                 <LayoutPositions />
                               </value>

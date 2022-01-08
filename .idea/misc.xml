@@ -22,6 +22,7 @@
         <entry key="app/src/main/res/layout/fragment_devices_list.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/fragment_devices_list_row.xml" value="0.37228260869565216" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.18020833333333333" />
+        <entry key="app/src/main/res/layout/fragment_map_standard_user.xml" value="0.2586050724637681" />
         <entry key="app/src/main/res/layout/fragment_my_fleet_add.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/fragment_my_fleet_edit.xml" value="0.2109375" />
         <entry key="app/src/main/res/layout/fragment_my_fleet_list.xml" value="0.2109375" />

@@ -4,6 +4,7 @@ public class AuthorizationStatusDTO {
     String rbac;
     String nickname;
     boolean logged;
+    int id;
 
     public String getRbac() {
         return rbac;
@@ -27,5 +28,13 @@ public class AuthorizationStatusDTO {
 
     public void setLogged(boolean logged) {
         this.logged = logged;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

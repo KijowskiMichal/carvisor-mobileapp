@@ -54,6 +54,9 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
         MapFragment.timestamp = timestamp;
         MapFragment.date = date;
         MapFragment.flag = true;
+        MapStandardUserFragment.timestamp = timestamp;
+        MapStandardUserFragment.date = date;
+        MapStandardUserFragment.flag = true;
     }
 
     public String getDate() {

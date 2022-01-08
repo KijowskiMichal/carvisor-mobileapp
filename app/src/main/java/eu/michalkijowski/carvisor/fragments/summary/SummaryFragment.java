@@ -97,7 +97,7 @@ public class SummaryFragment extends Fragment {
     @Override
     public void onAttach(final Activity activity) {
         super.onAttach(activity);
-        new DownloadDataForList().execute();
+        //new DownloadDataForList().execute();
     }
 
 
