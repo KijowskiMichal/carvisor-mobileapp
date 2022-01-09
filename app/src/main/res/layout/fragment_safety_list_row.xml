@@ -11,35 +11,32 @@
     android:descendantFocusability="beforeDescendants" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card"
-        android:descendantFocusability="afterDescendants"
-        android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingTop="15dp"
-        android:paddingRight="15dp"
         android:paddingBottom="15dp"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="10dp">
+        android:paddingRight="15dp"
+        android:background="@drawable/card"
+        android:descendantFocusability="afterDescendants">
 
         <TextView
             android:id="@+id/userId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="116dp"
             android:text="TextView"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/name" />
 
         <TextView
             android:id="@+id/rate"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/rate_background"
             android:gravity="center_horizontal|center_vertical"
@@ -47,25 +44,8 @@
             android:textColor="#ffffff"
             android:textSize="16sp"
             android:textStyle="bold|italic"
-            app:layout_constraintStart_toStartOf="@+id/rate2"
-            app:layout_constraintTop_toBottomOf="@+id/space"
-            tools:layout_conversion_absoluteHeight="22dp"
-            tools:layout_conversion_absoluteWidth="411dp" />
-
-        <TextView
-            android:id="@+id/rate2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rate_background"
-            android:gravity="center_horizontal|center_vertical"
-            android:text="0.0"
-            android:textColor="#ffffff"
-            android:textSize="16sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintStart_toEndOf="@+id/licensePlate6"
-            app:layout_constraintTop_toBottomOf="@+id/rate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_conversion_absoluteHeight="22dp"
             tools:layout_conversion_absoluteWidth="411dp" />
 
@@ -73,40 +53,14 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Data:"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
             android:textColor="#474747"
             android:textSize="12sp"
             android:textStyle="normal|bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_conversion_absoluteHeight="19dp"
-            tools:layout_conversion_absoluteWidth="411dp" />
-
-        <TextView
-            android:id="@+id/name2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Miejsce początkowe:"
-            android:textColor="#474747"
-            android:textSize="12sp"
-            android:textStyle="normal|bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name"
-            tools:layout_conversion_absoluteHeight="19dp"
-            tools:layout_conversion_absoluteWidth="411dp" />
-
-        <TextView
-            android:id="@+id/name3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Miejsce końcowe:"
-            android:textColor="#474747"
-            android:textSize="12sp"
-            android:textStyle="normal|bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name2"
+            app:layout_constraintStart_toEndOf="@+id/rate"
+            app:layout_constraintTop_toTopOf="@+id/rate"
             tools:layout_conversion_absoluteHeight="19dp"
             tools:layout_conversion_absoluteWidth="411dp" />
 
@@ -116,46 +70,46 @@
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
             android:background="#474747"
-            app:layout_constraintTop_toBottomOf="@+id/name3"
+            app:layout_constraintTop_toBottomOf="@+id/rate"
             tools:layout_editor_absoluteX="35dp" />
 
         <TextView
             android:id="@+id/licensePlate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Liczba wykroczeń:"
+            android:layout_marginTop="8dp"
+            android:text="Liczba tras:"
             android:textColor="#474747"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rate"
-            app:layout_constraintEnd_toStartOf="@+id/tracks"
-            app:layout_constraintTop_toTopOf="@+id/rate"
+            app:layout_constraintStart_toStartOf="@+id/rate"
+            app:layout_constraintTop_toBottomOf="@+id/space"
             tools:layout_conversion_absoluteHeight="16dp"
             tools:layout_conversion_absoluteWidth="411dp" />
 
         <TextView
-            android:id="@+id/licensePlate5"
+            android:id="@+id/licensePlate2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ocena ekojazdy:"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="100dp"
+            android:text="Śr. spalanie: "
             android:textColor="#474747"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rate"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/space"
             tools:layout_conversion_absoluteHeight="16dp"
             tools:layout_conversion_absoluteWidth="411dp" />
 
         <TextView
-            android:id="@+id/licensePlate6"
+            android:id="@+id/licensePlate3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ocena bezpieczeństwa:"
+            android:layout_marginTop="8dp"
+            android:text="Śr. obroty: "
             android:textColor="#474747"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rate2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rate2"
+            app:layout_constraintStart_toStartOf="@+id/licensePlate2"
+            app:layout_constraintTop_toBottomOf="@+id/licensePlate2"
             tools:layout_conversion_absoluteHeight="16dp"
             tools:layout_conversion_absoluteWidth="411dp" />
 
@@ -163,44 +117,63 @@
             android:id="@+id/tracks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="0"
             android:textColor="#474747"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/rate"
-            app:layout_constraintEnd_toEndOf="@+id/space"
-            app:layout_constraintTop_toTopOf="@+id/rate"
+            app:layout_constraintStart_toEndOf="@+id/licensePlate"
+            app:layout_constraintTop_toTopOf="@+id/licensePlate"
             tools:layout_conversion_absoluteHeight="19dp"
             tools:layout_conversion_absoluteWidth="411dp" />
 
         <TextView
-            android:id="@+id/textView23"
+            android:id="@+id/licensePlate4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="TextView"
+            android:layout_marginTop="8dp"
+            android:text="Śr. prędkość: "
+            android:textColor="#474747"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/name"
-            app:layout_constraintTop_toTopOf="@+id/name" />
+            app:layout_constraintStart_toStartOf="@+id/licensePlate2"
+            app:layout_constraintTop_toBottomOf="@+id/licensePlate3"
+            tools:layout_conversion_absoluteHeight="16dp"
+            tools:layout_conversion_absoluteWidth="411dp" />
 
         <TextView
-            android:id="@+id/textView24"
+            android:id="@+id/combustion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="TextView"
+            android:text="0"
+            android:textColor="#474747"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/name2"
-            app:layout_constraintTop_toTopOf="@+id/name2" />
+            app:layout_constraintEnd_toEndOf="@+id/space"
+            app:layout_constraintTop_toTopOf="@+id/licensePlate2"
+            tools:layout_conversion_absoluteHeight="16dp"
+            tools:layout_conversion_absoluteWidth="411dp" />
 
         <TextView
-            android:id="@+id/textView27"
+            android:id="@+id/revolutions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="TextView"
+            android:text="0"
+            android:textColor="#474747"
             android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/name3"
-            app:layout_constraintTop_toTopOf="@+id/name3" />
+            app:layout_constraintEnd_toEndOf="@+id/space"
+            app:layout_constraintTop_toTopOf="@+id/licensePlate3"
+            tools:layout_conversion_absoluteHeight="16dp"
+            tools:layout_conversion_absoluteWidth="411dp" />
+
+        <TextView
+            android:id="@+id/speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="#474747"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/space"
+            app:layout_constraintTop_toTopOf="@+id/licensePlate4"
+            tools:layout_conversion_absoluteHeight="16dp"
+            tools:layout_conversion_absoluteWidth="411dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
