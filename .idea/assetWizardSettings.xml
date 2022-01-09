@@ -139,8 +139,19 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/tmp/ic_android_black_24dp.xml" />
+                                                <entry key="color" value="9ea7b1" />
+                                                <entry key="imagePath" value="/tmp/baseline_control_camera_24.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="clipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/control_camera/baseline_control_camera_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -184,11 +195,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="assetType" value="IMAGE" />
                                       <entry key="cropped" value="true" />
                                       <entry key="iconShape" value="CIRCLE" />
                                       <entry key="imageAsset" value="$USER_HOME$/Dokumenty/photoAdd.png" />
-                                      <entry key="outputName" value="ic_photo_add" />
+                                      <entry key="outputName" value="ic_zone" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -343,7 +353,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/michal/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/add/baseline_add_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/control_camera/baseline_control_camera_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -353,8 +363,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_add" />
+                            <entry key="color" value="9ea7b1" />
+                            <entry key="outputName" value="ic_zone" />
                           </map>
                         </option>
                       </PersistentState>
