@@ -58,8 +58,23 @@ public class MyFleetListFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     ListView listView;
     FloatingActionButton fab;
+    boolean refreshFlag = false;
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (refreshFlag) {
+            if (AuthorizationService.authorizationStatus.getRbac().equals("STANDARD_USER")) {
+                Bundle bundle = new Bundle();
+                NavHostFragment.findNavController(MyFleetListFragment.this)
+                        .navigate(R.id.action_nav_my_fleet_to_nav_summary,bundle);
+            }
+            else {
+                new DownloadDataForList().execute();
+            }
+        }
+        refreshFlag = true;
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

@@ -37,6 +37,7 @@ import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.DeviceDTO;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
 import eu.michalkijowski.carvisor.fragments.myFleet.list.MyFleetListFragment;
+import eu.michalkijowski.carvisor.services.AuthorizationService;
 import eu.michalkijowski.carvisor.services.DevicesService;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.UsersService;
@@ -47,6 +48,16 @@ public class DevicesListFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     ListView listView;
     FloatingActionButton fab;
+    boolean refreshFlag = false;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (refreshFlag) {
+            new DownloadDataForList().execute();
+        }
+        refreshFlag = true;
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

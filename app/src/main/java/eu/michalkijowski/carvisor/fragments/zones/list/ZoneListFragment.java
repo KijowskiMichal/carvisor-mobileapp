@@ -38,6 +38,7 @@ import java.util.List;
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
 import eu.michalkijowski.carvisor.data_models.ZonesDTO;
+import eu.michalkijowski.carvisor.fragments.reports.list.ReportsListFragment;
 import eu.michalkijowski.carvisor.services.AuthorizationService;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.ReverseGeocodingService;
@@ -50,7 +51,16 @@ public class ZoneListFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     ListView listView;
     FloatingActionButton fab;
+    boolean refreshFlag = false;
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (refreshFlag) {
+            new DownloadDataForList().execute();
+        }
+        refreshFlag = true;
+    }
 
 
     @Override
