@@ -107,7 +107,7 @@ public class UsersService {
         }
     }
 
-    public static void deleteUser(Integer id) {
+    public static boolean deleteUser(Integer id) {
         try {
             Request request = new Request.Builder().delete()
                     .url(MainActivity.BaseURL + "/API/users/removeUser/"+id+"/")
@@ -115,9 +115,16 @@ public class UsersService {
             Call call = MainActivity.defaultHttpClient.newCall(request);
             Response response = call.execute();
             System.out.println(response.code());
+            if (response.code()==200) {
+                return true;
+            }
+            else {
+                return false;
+            }
         } catch (IOException | SecurityException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public static void setNfcTag(NfcTagDTO nfcTagDTO, int id) {
