@@ -182,4 +182,8 @@
     <string name="zones">Lista stref</string>
     <string name="zone">Strefy</string>
     <string name="zones_add">Tworzenie strefy</string>
+    <string name="zones_edit">Edycja strefy</string>
+    <string name="zones_preview">Podgląd strefy</string>
+    <string name="remove_zone_ok">Usuń strefę</string>
+    <string name="deleting_zone">Usuwanie strefy</string>
 </resources>

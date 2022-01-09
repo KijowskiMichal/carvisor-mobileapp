@@ -43,15 +43,15 @@ public class RowActionDialog extends DialogFragment {
                         if (which==0) {
                             bundle.putInt("id", Integer.valueOf(tag));
                             NavHostFragment.findNavController(fragment)
-                                    .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet_edit,bundle);
+                                    .navigate(R.id.action_nav_zones_to_nav_zones_preview,bundle);
                         }
                         else if (which==1) {
-                            new RowDeleteDialog().show(manager, tag, name, fragment, context);
+                            bundle.putInt("id", Integer.valueOf(tag));
+                            NavHostFragment.findNavController(fragment)
+                                    .navigate(R.id.action_nav_zones_to_nav_zones_edit,bundle);
                         }
                         else if (which==2) {
-                            bundle.putInt("mapUserID", Integer.valueOf(tag));
-                            NavHostFragment.findNavController(fragment)
-                                    .navigate(R.id.action_nav_my_fleet_to_nav_map,bundle);
+                            new RowDeleteDialog().show(manager, tag, name, fragment, context);
                         }
                     }
                 });

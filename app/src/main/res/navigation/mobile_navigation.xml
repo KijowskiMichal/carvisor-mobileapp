@@ -336,6 +336,20 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_zones_to_nav_zones_edit"
+            app:destination="@id/nav_zones_edit"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_zones_to_nav_zones_preview"
+            app:destination="@id/nav_zones_preview"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
                 <fragment
@@ -345,6 +359,34 @@
                     tools:layout="@layout/fragment_zones_add" >
                     <action
                         android:id="@+id/action_nav_zones_add_to_nav_zones"
+                        app:destination="@id/nav_zones"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+                <fragment
+                    android:id="@+id/nav_zones_edit"
+                    android:name="eu.michalkijowski.carvisor.fragments.zones.edit.ZonesEditFragment"
+                    android:label="@string/zones_edit"
+                    tools:layout="@layout/fragment_zones_edit" >
+                    <action
+                        android:id="@+id/action_nav_zones_edit_to_nav_zones"
+                        app:destination="@id/nav_zones"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
+
+                <fragment
+                    android:id="@+id/nav_zones_preview"
+                    android:name="eu.michalkijowski.carvisor.fragments.zones.preview.ZonesPreviewFragment"
+                    android:label="@string/zones_preview"
+                    tools:layout="@layout/fragment_zones_preview" >
+                    <action
+                        android:id="@+id/action_nav_zones_preview_to_nav_zones"
                         app:destination="@id/nav_zones"
                         app:enterAnim="@anim/nav_default_enter_anim"
                         app:exitAnim="@anim/nav_default_exit_anim"

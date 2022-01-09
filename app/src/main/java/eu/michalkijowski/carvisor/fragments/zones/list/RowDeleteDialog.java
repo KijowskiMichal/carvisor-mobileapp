@@ -18,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.services.UsersService;
+import eu.michalkijowski.carvisor.services.ZonesService;
 
 public class RowDeleteDialog extends DialogFragment {
 
@@ -40,11 +41,11 @@ public class RowDeleteDialog extends DialogFragment {
 
         return new AlertDialog.Builder(getActivity())
                 .setIcon(R.drawable.ic_add)
-                .setTitle("Czy chcesz usunąć użytkownika "+name+"?")
-                .setPositiveButton(R.string.remove_user_ok,
+                .setTitle("Czy chcesz usunąć strefę "+name+"?")
+                .setPositiveButton(R.string.remove_zone_ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                new DeleteUser().execute();
+                                new DeleteZone().execute();
                             }
                         }
                 )
@@ -58,27 +59,27 @@ public class RowDeleteDialog extends DialogFragment {
                 .create();
     }
 
-    private class DeleteUser extends AsyncTask<Void, Void, Void> {
+    private class DeleteZone extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-            UsersService.deleteUser(Integer.valueOf(tag));
+            ZonesService.deleteZone(Integer.valueOf(tag));
             return null;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.deleting_user), true, false);
+            mProgressDialog = ProgressDialog.show(getActivity(), "", getString(R.string.deleting_zone), true, false);
         }
 
         @Override
         protected void onPostExecute(Void params) {
             super.onPostExecute(params);
             mProgressDialog.dismiss();
-            Toast.makeText(context, "Poprawnie usunięto użytkownika.", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Poprawnie usunięto strefę.", Toast.LENGTH_LONG).show();
             Bundle bundle = new Bundle();
             NavHostFragment.findNavController(fragment)
-                    .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet,bundle);
+                    .navigate(R.id.action_nav_zones_to_nav_zones,bundle);
         }
     }
 

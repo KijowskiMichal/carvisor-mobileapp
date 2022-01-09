@@ -53,4 +53,52 @@ public class ZonesService {
         }
         return false;
     }
+
+    public static ZonesDTO getZone(int id) {
+        try {
+            Request request = new Request.Builder()
+                .url(MainActivity.BaseURL + "/API/zones/getZone/"+id+"/")
+                .build();
+
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            ZonesDTO zonesDTO = new Gson().fromJson(response.body().string(), ZonesDTO.class);
+            return  zonesDTO;
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean editZone(ZonesDTO zonesDTO, int id) {
+        Gson gson = new Gson();
+        try {
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), gson.toJson(zonesDTO));
+            Request request = new Request.Builder().url(MainActivity.BaseURL+"/API/zones/updateZone/"+id+"/").post(body).build();
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            System.out.println(response.code());
+            System.out.println(response.body().string());
+            if (response.code()==200)
+            {
+                return true;
+            }
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void deleteZone(Integer id) {
+        try {
+            Request request = new Request.Builder().delete()
+                    .url(MainActivity.BaseURL + "/API/zones/remove/"+id+"/")
+                    .build();
+            Call call = MainActivity.defaultHttpClient.newCall(request);
+            Response response = call.execute();
+            System.out.println(response.code());
+        } catch (IOException | SecurityException e) {
+            e.printStackTrace();
+        }
+    }
 }
