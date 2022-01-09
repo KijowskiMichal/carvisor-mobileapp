@@ -38,7 +38,6 @@ import java.util.List;
 import eu.michalkijowski.carvisor.R;
 import eu.michalkijowski.carvisor.data_models.UserDTO;
 import eu.michalkijowski.carvisor.data_models.ZonesDTO;
-import eu.michalkijowski.carvisor.fragments.myFleet.list.RowActionDialog;
 import eu.michalkijowski.carvisor.services.AuthorizationService;
 import eu.michalkijowski.carvisor.services.ImageService;
 import eu.michalkijowski.carvisor.services.ReverseGeocodingService;
@@ -91,7 +90,7 @@ public class ZoneListFragment extends Fragment {
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
                 NavHostFragment.findNavController(ZoneListFragment.this)
-                        .navigate(R.id.action_nav_my_fleet_to_nav_my_fleet_add,bundle);
+                        .navigate(R.id.action_nav_zones_to_nav_zones_add,bundle);
             }
         });
         requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {

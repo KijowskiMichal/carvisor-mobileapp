@@ -329,7 +329,28 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_nav_zones_to_nav_zones_add"
+            app:destination="@id/nav_zones_add"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
+
+                <fragment
+                    android:id="@+id/nav_zones_add"
+                    android:name="eu.michalkijowski.carvisor.fragments.zones.add.ZonesAddFragment"
+                    android:label="@string/zones_add"
+                    tools:layout="@layout/fragment_zones_add" >
+                    <action
+                        android:id="@+id/action_nav_zones_add_to_nav_zones"
+                        app:destination="@id/nav_zones"
+                        app:enterAnim="@anim/nav_default_enter_anim"
+                        app:exitAnim="@anim/nav_default_exit_anim"
+                        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+                        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+                </fragment>
 
     <fragment
         android:id="@+id/nav_map"
